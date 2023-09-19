@@ -4,7 +4,7 @@
 *.elf
 *.o
 .gitignore
-philo
+philo/philo
 
 
 # Executables
@@ -22,3 +22,4 @@ test
 
 # Directoris
 .vscode/
+obj/*

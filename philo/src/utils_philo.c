@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/19 11:06:38 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/19 12:38:14 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	init_philo_struct(t_philo *p)
 {
-	p->n_philo = 0;
-	p->die_time = 0;
-	p->eat_time = 0;
-	p->sleep_time = 0;
-	p->each_time = 0;
+	p->n_philo = -1;
+	p->die_time = -1;
+	p->eat_time = -1;
+	p->sleep_time = -1;
+	p->each_time = -1;
 }
 
 void	ft_error(char *str)
