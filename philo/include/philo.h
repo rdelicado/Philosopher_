@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/19 10:54:02 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:21:26 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,15 @@ void	leaks(void);
 /* philo.c */
 int		main(int ac, char **av);
 void	checker_argv(t_philo *p, char **av);
+void	create_philos(t_philo *p);
 
 /* utils_philo.c */
 void	init_philo_struct(t_philo *p);
 void	ft_error(char *str);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
+
+/* utils_phtreads.c */
+void	*controller(void *args);
 
 #endif

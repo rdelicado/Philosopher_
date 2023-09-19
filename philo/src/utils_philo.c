@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/19 12:38:14 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:08:23 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	ft_error(char *str)
 {
 	printf("Error: %s\n\n", str);
 	printf("Uso:\n");
-	printf("./philo <number_philo> <time_die> <time_eat> <time_sleep>\n");
+	printf("./philo <number_philo> <time_die> <time_eat> <time_sleep> ");
+	printf("[optional] <each_time>\n");
 	exit(1);
 }
 
