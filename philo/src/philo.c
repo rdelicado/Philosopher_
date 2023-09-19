@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/19 16:27:57 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/19 19:39:58 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,24 @@ void	checker_argv(t_philo *p, char **av)
 		p->sleep_time < 1)
 		ft_error("The argument must be greater than 1");
 }
+void	set_arr_philos(t_philo *p)
+{
+	int	i;
+	int	j;
+
+	p->arr_philos = malloc(sizeof(int) * p->n_philo);
+	if (!p->arr_philos)
+		ft_error("No se pudo crear el array de philos");
+	i = 0;
+	j = 1;
+	while (p->n_philo >= 0)
+	{
+		p->arr_philos[i] = j;
+		i++;
+		j++;
+		p->n_philo--;
+	}
+}
 
 void	create_philos(t_philo *p)
 {
@@ -61,6 +79,8 @@ int	main(int ac, char **av)
 	//atexit(leaks);
 	init_philo_struct(&p);
 	checker_argv(&p, av);
+	set_arr_philos(&p);
 	create_philos(&p);
+	free(p.arr_philos);
 	return (0);
 }

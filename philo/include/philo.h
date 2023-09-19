@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/19 16:21:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/19 19:01:38 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,17 @@ typedef struct s_philo
 	int	eat_time;
 	int	sleep_time;
 	int	each_time;
+	int	*arr_philos;
 }	t_philo;
 
 /* leaks.c */
 void	leaks(void);
 
 /* philo.c */
-int		main(int ac, char **av);
 void	checker_argv(t_philo *p, char **av);
+void	set_arr_philos(t_philo *p);
 void	create_philos(t_philo *p);
+int		main(int ac, char **av);
 
 /* utils_philo.c */
 void	init_philo_struct(t_philo *p);
