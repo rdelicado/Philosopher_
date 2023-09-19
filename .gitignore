@@ -2,6 +2,10 @@
 *.a
 *.obj 
 *.elf
+*.o
+.gitignore
+philo
+
 
 # Executables
 *.out
@@ -16,3 +20,5 @@
 main.c 
 test
 
+# Directoris
+.vscode/
