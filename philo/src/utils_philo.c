@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/20 15:39:49 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/20 20:03:14 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ void	init_philo_struct(t_philo *p)
 	p->arr_philos = NULL;
 	p->arr_forks = NULL;
 	p->arr_forks = NULL;
+}
+
+void	init_data_philos(t_philo *p)
+{
+	p->arr_philos->thread = 0;
+	p->arr_philos->index = 1;
 }
 
 void	ft_error(char *str)

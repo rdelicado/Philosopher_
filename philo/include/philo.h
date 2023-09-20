@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/20 15:56:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/20 19:09:01 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 #include <sys/wait.h>
 #include <semaphore.h>
 
+/* structuras */
+
+typedef struct	s_data
+{
+	pthread_t	thread;
+	int			index;
+}	t_data;
+
 typedef struct s_philo
 {
 	int				n_philo;
@@ -31,7 +39,7 @@ typedef struct s_philo
 	int				sleep_time;
 	int				each_time;
 	long			time_init;
-	pthread_t		*arr_philos;
+	t_data			*arr_philos;
 	pthread_mutex_t	*arr_forks;
 }	t_philo;
 
@@ -47,6 +55,7 @@ int		main(int ac, char **av);
 
 /* utils_philo.c */
 void	init_philo_struct(t_philo *p);
+void	init_data_philos(t_philo *p);
 void	ft_error(char *str);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);

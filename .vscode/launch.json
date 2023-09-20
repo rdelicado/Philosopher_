@@ -6,7 +6,7 @@
             "type": "lldb",
             "request": "launch",
             "program": "/Users/rdelicad/projectos/lxuxer42/philo/philo/philo",
-            "args": ["112", "234", "345", "400"],
+            "args": ["200", "234", "345", "400"],
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "C/C++: gcc compilar archivo activo"
         }

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/20 16:13:11 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/20 19:16:03 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,15 @@ void	checker_argv(t_philo *p, char **av)
 void	set_arr_philos(t_philo *p)
 {
 	int	i;
-	int	j;
-
-	p->arr_philos = malloc(sizeof(pthread_t) * p->n_philo);
+	p->arr_philos = malloc(sizeof(t_data) * p->n_philo);
 	if (!p->arr_philos)
 		ft_error("No se pudo crear el array de philos\n");
 	i = 0;
-	j = 1;
-	while (p->n_philo >= 0)
+	while (p->n_philo > 0)
 	{
-		p->arr_philos[i] = j;
-		if (0 != pthread_create(&p->arr_philos[i], NULL, controller, NULL))
+		if (0 != pthread_create(&p->arr_philos[i].thread, NULL, controller, NULL))
 		ft_error("No se pudo crear el hilo\n");
 		i++;
-		j++;
 		p->n_philo--;
 	}
 }
@@ -73,7 +68,6 @@ void	set_arr_forks(t_philo *p)
 	{
 		pthread_mutex_init(&p->arr_forks[i], NULL);
 		i--;
-		j--;
 		p->arr_forks--;
 	}
 }
@@ -96,6 +90,7 @@ int	main(int ac, char **av)
 		ft_error("You must enter at least 4 arguments!");
 	//atexit(leaks);
 	time_start_prog(&p);
+	init_data_philos(&p);
 	init_philo_struct(&p);
 	checker_argv(&p, av);
 	set_arr_philos(&p);
