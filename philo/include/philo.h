@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/19 19:01:38 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:56:26 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@
 
 typedef struct s_philo
 {
-	int	n_philo;
-	int	die_time;
-	int	eat_time;
-	int	sleep_time;
-	int	each_time;
-	int	*arr_philos;
+	int				n_philo;
+	int				die_time;
+	int				eat_time;
+	int				sleep_time;
+	int				each_time;
+	long			time_init;
+	pthread_t		*arr_philos;
+	pthread_mutex_t	*arr_forks;
 }	t_philo;
 
 /* leaks.c */
@@ -39,7 +41,8 @@ void	leaks(void);
 /* philo.c */
 void	checker_argv(t_philo *p, char **av);
 void	set_arr_philos(t_philo *p);
-void	create_philos(t_philo *p);
+void	set_arr_forks(t_philo *p);
+void	time_start_prog(t_philo *p);
 int		main(int ac, char **av);
 
 /* utils_philo.c */
@@ -50,5 +53,6 @@ int		ft_isdigit(int c);
 
 /* utils_phtreads.c */
 void	*controller(void *args);
+void	create_philos(t_philo *p);
 
 #endif

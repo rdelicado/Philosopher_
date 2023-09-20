@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/19 19:11:45 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:32:11 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,17 @@ void	*controller(void *args)
 	}
 	return NULL;
 }
+
+void	create_philos(t_philo *p)
+{
+	pthread_t	control;
+	int	i;
+
+	i = 0;
+	if (0 != pthread_create(&control, NULL, controller, p))
+		ft_error("No se pudo crear el controlador\n");
+	if (0 != pthread_join(control, NULL))
+		ft_error("Error al esperar al controlador\n");
+}
+
+

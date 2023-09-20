@@ -6,24 +6,11 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/19 19:39:22 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:39:49 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-/* void	ft_frearr(t_philo *p)
-{
-	int	i;
-
-	i = 0;
-	while (p->arr_philos[i])
-	{
-		free(p->arr_philos[i]);
-		i++;
-	}
-	free(p->arr_philos);
-} */
 
 void	init_philo_struct(t_philo *p)
 {
@@ -32,6 +19,10 @@ void	init_philo_struct(t_philo *p)
 	p->eat_time = -1;
 	p->sleep_time = -1;
 	p->each_time = -1;
+	p->time_init = -1;
+	p->arr_philos = NULL;
+	p->arr_forks = NULL;
+	p->arr_forks = NULL;
 }
 
 void	ft_error(char *str)
