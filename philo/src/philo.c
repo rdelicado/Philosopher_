@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/21 18:57:28 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/21 19:01:17 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int ac, char **av)
 
 	if (ac < 5 || ac > 6)
 		ft_error("You must enter at least 4 arguments!");
-	atexit(leaks);
+	//atexit(leaks);
 	init_data_philos(&d);
 	init_philo_struct(&p);
 	checker_argv(&p, &d, av);
