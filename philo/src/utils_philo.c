@@ -6,37 +6,24 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/20 20:03:14 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:56:31 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	init_philo_struct(t_philo *p)
-{
-	p->n_philo = -1;
-	p->die_time = -1;
-	p->eat_time = -1;
-	p->sleep_time = -1;
-	p->each_time = -1;
-	p->time_init = -1;
-	p->arr_philos = NULL;
-	p->arr_forks = NULL;
-	p->arr_forks = NULL;
-}
-
-void	init_data_philos(t_philo *p)
-{
-	p->arr_philos->thread = 0;
-	p->arr_philos->index = 1;
-}
-
-void	ft_error(char *str)
+void	ft_error_help(char *str)
 {
 	printf("Error: %s\n\n", str);
 	printf("Uso:\n");
 	printf("./philo <number_philo> <time_die> <time_eat> <time_sleep> ");
 	printf("[optional] <each_time>\n");
+	exit(1);
+}
+
+void	ft_error(char *str)
+{
+	printf("Error: %s\n", str);
 	exit(1);
 }
 
@@ -71,4 +58,3 @@ int	ft_isdigit(int c)
 		return (1);
 	return (0);
 }
-
