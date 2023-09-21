@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/21 19:13:11 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/21 21:34:54 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 /* structuras */
 
-typedef struct s_data
+typedef struct s_philo
 {
 	pthread_t		thread;
 	pthread_mutex_t	mutex;
@@ -35,26 +35,27 @@ typedef struct s_data
 	int				sleep_to_time;
 	int				thing_to_time;
 	int				optional;
-}	t_data;
+}	t_philo;
 
-typedef struct s_philo
+typedef struct s_table
 {
+	struct s_philo	ph;
 	int				n_philo;
 	long			time_init;
 	long			time_curr;
-	t_data			*arr_p;
-	t_data			*arr_m;
-}	t_philo;
+	t_philo			*arr_p;
+	t_philo			*arr_m;
+}	t_table;
 
 /* leaks.c */
 void	leaks(void);
-void	init_philo_struct(t_philo *p);
-void	init_data_philos(t_data *d);
+void	init_philo_struct(t_table *p);
+void	init_data_philos(t_philo *d);
 
 /* philo.c */
-void	checker_argv(t_philo *p, t_data *d, char **av);
-int		time_start_prog(t_philo *p);
-int		time_curr_prog(t_philo *p);
+void	checker_argv(t_table *p, t_philo *d, char **av);
+int		time_start_prog(t_table *p);
+int		time_curr_prog(t_table *p);
 int		main(int ac, char **av);
 
 /* utils_philo.c */
@@ -66,8 +67,8 @@ int		ft_isdigit(int c);
 /* utils_phtreads.c */
 void	*philo_routine(void *args);
 void	*controller(void *args);
-void	create_philos(t_philo *p);
-void	set_arr_philos(t_philo *p);
-void	set_arr_forks(t_philo *p);
+void	create_philos(t_table *p);
+void	set_arr_philos(t_table *p);
+void	set_arr_forks(t_table *p);
 
 #endif
