@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/21 21:34:54 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/22 17:57:26 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 typedef struct s_philo
 {
 	pthread_t		thread;
-	pthread_mutex_t	mutex;
 	int				index;
 	int				die_to_time;
 	int				eat_to_time;
@@ -39,12 +38,11 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	struct s_philo	ph;
 	int				n_philo;
 	long			time_init;
 	long			time_curr;
 	t_philo			*arr_p;
-	t_philo			*arr_m;
+	pthread_mutex_t	*arr_m;
 }	t_table;
 
 /* leaks.c */

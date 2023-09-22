@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/22 09:18:42 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:19:26 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,22 @@ void	*philo_routine(void *args)
 	t_table	*t;
 
 	t = (t_table *)args;
-	(void)t;
+	//coger tenedor
+	printf("%d %d has taken a fork", t.);
 	//comer
+	printf("%d %d is eating", );
 	//dormir
+	printf("%d %d is sleeping", );
 	//pensar
-	sleep(1);
+	printf("%d %d is thinking", );
+	//morir
+	printf("%d %d died", );
+	usleep(t->arr_p->eat_to_time * 1000);
+/* ◦ timestamp_in_ms X has taken a fork → ha tomado un tenedor
+◦ timestamp_in_ms X is eating              → esta comiendo
+◦ timestamp_in_ms X is sleeping          → esta durmiendo
+◦ timestamp_in_ms X is thinking           → esta pensando
+◦ timestamp_in_ms X died                     → murio */
 	printf("hilo philosopher creado\n");
 	return (NULL);
 }
@@ -86,12 +97,12 @@ void	set_arr_forks(t_table *t)
 		ft_error("Error al crear los tenedores\n");
 	while (j > 0)
 	{
-		pthread_mutex_init(&t->arr_m[i].mutex, NULL);
+		pthread_mutex_init(&t->arr_m[i], NULL);
 		i--;
 		j--;
 	}
 }
-
+/* 
 void* filosofo(void* arg) {
     t_philo* philosopher = (t_philo*)arg;
     int left_fork = philosopher->id;
@@ -109,3 +120,4 @@ void* filosofo(void* arg) {
 
     pthread_exit(NULL);
 }
+ */
