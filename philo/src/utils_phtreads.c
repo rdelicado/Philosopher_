@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/21 21:37:05 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/22 09:18:42 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,22 @@ void	set_arr_forks(t_table *t)
 		i--;
 		j--;
 	}
+}
+
+void* filosofo(void* arg) {
+    t_philo* philosopher = (t_philo*)arg;
+    int left_fork = philosopher->id;
+    int right_fork = (philosopher->id + 1) % NUM_FILOSOFOS;
+
+    // Acceder a los tenedores
+    pthread_mutex_lock(&table->forks[left_fork]);
+    pthread_mutex_lock(&table->forks[right_fork]);
+
+    // Realizar acciones de comer
+
+    // Liberar los tenedores
+    pthread_mutex_unlock(&table->forks[left_fork]);
+    pthread_mutex_unlock(&table->forks[right_fork]);
+
+    pthread_exit(NULL);
 }
