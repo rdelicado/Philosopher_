@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/25 17:42:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/25 23:19:07 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_error_help(char *str);
 void	ft_error(char *str);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
+long	ft_usleep(int time);
 
 /* utils_phtreads.c */
 void	*philo_routine(void *args);

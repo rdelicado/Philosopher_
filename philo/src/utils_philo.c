@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/21 18:56:31 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/25 23:55:06 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,24 @@ int	ft_isdigit(int c)
 	if ((unsigned char)(c >= '0' && c <= '9'))
 		return (1);
 	return (0);
+}
+
+long	ft_usleep(int time)
+{
+	struct timeval	init;
+	long			time_start;
+	long			time_finish;
+
+	if (gettimeofday(&init, NULL) < 0)
+		ft_error("no time");
+	time_start = (init.tv_sec * 1000) + (init.tv_usec / 1000);
+	while (1)
+	{
+		if (gettimeofday(&init, NULL) < 0)
+			ft_error("no time");
+		time_finish = (init.tv_sec * 1000) + (init.tv_usec / 1000);
+		time_finish -= time_start;
+		if (time_finish == time)
+			return (time_finish);
+	}
 }

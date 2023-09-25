@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/25 17:41:22 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/25 23:34:31 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	*philo_routine(void *args)
 	//
 	printf("tiempo init %ld\n", time_start_prog(t) - t->time_init);
 	t->time_curr = time_start_prog(t);
-	for (int i = 0; i < 10; i++){
-		usleep(200000);
+	for (int i = 0; i < 100; i++){
+		ft_usleep(200);
 		printf("tiempo init %ld\n", time_start_prog(t) - t->time_curr);
 	}
 	//printf("tiempo %d\n", time_curr_prog(t));
