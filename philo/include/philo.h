@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/22 17:57:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:42:26 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void	init_data_philos(t_philo *d);
 
 /* philo.c */
 void	checker_argv(t_table *p, t_philo *d, char **av);
-int		time_start_prog(t_table *p);
-int		time_curr_prog(t_table *p);
+long	time_start_prog(t_table *p);
 int		main(int ac, char **av);
 
 /* utils_philo.c */

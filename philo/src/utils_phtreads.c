@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/22 18:19:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:41:22 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@ void	*philo_routine(void *args)
 
 	t = (t_table *)args;
 	//coger tenedor
-	printf("%d %d has taken a fork", t.);
+	//
+	printf("tiempo init %ld\n", time_start_prog(t) - t->time_init);
+	t->time_curr = time_start_prog(t);
+	for (int i = 0; i < 10; i++){
+		usleep(200000);
+		printf("tiempo init %ld\n", time_start_prog(t) - t->time_curr);
+	}
+	//printf("tiempo %d\n", time_curr_prog(t));
+	/* printf("%d %d has taken a fork", t.);
 	//comer
 	printf("%d %d is eating", );
 	//dormir
@@ -27,7 +35,7 @@ void	*philo_routine(void *args)
 	printf("%d %d is thinking", );
 	//morir
 	printf("%d %d died", );
-	usleep(t->arr_p->eat_to_time * 1000);
+	usleep(t->arr_p->eat_to_time * 1000); */
 /* ◦ timestamp_in_ms X has taken a fork → ha tomado un tenedor
 ◦ timestamp_in_ms X is eating              → esta comiendo
 ◦ timestamp_in_ms X is sleeping          → esta durmiendo
@@ -51,11 +59,19 @@ void	*controller(void *args)
 void	create_philos(t_table *t)
 {
 	pthread_t	control;
+	/* int			i;
 
+	i = 0; */
 	if (0 != pthread_create(&control, NULL, controller, t))
 		ft_error("No se pudo crear el controlador\n");
 	if (0 != pthread_join(control, NULL))
 		ft_error("Error al esperar al controlador\n");
+	/* while (i < t->n_philo)
+	{
+		if (0 != pthread_join(t->arr_p[i].thread, NULL))
+			ft_error("Error al esperar al controlador\n");
+		i++;
+	} */
 }
 
 void	set_arr_philos(t_table *t)

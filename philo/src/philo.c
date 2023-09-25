@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/21 21:36:41 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:42:18 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,14 @@ void	checker_argv(t_table *t, t_philo *p, char **av)
 		ft_error_help("The argument must be greater than 1");
 }
 
-int	time_start_prog(t_table *t)
+long	time_start_prog(t_table *t)
 {
 	struct timeval	init;
 
 	if (gettimeofday(&init, NULL) < 0)
 		ft_error("no time");
 	t->time_init = (init.tv_sec * 1000) + (init.tv_usec / 1000);
-	printf("Tiempo desde que inicio prog: %ld\n", t->time_init);
 	return (t->time_init);
-}
-
-int	time_curr_prog(t_table *t)
-{
-	struct timeval	curr;
-
-	gettimeofday(&curr, NULL);
-	t->time_curr = (curr.tv_sec * 1000) + (curr.tv_usec / 1000);
-	return (t->time_curr);
 }
 
 int	main(int ac, char **av)
