@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/25 23:19:07 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/26 21:51:00 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ typedef struct s_philo
 	int				eat_to_time;
 	int				sleep_to_time;
 	int				thing_to_time;
+	long			time_init;
+	long			time_curr;
 	int				optional;
 }	t_philo;
 
 typedef struct s_table
 {
 	int				n_philo;
-	long			time_init;
-	long			time_curr;
 	t_philo			*arr_p;
 	pthread_mutex_t	*arr_m;
 }	t_table;
@@ -52,7 +52,7 @@ void	init_data_philos(t_philo *d);
 
 /* philo.c */
 void	checker_argv(t_table *p, t_philo *d, char **av);
-long	time_start_prog(t_table *p);
+long	time_start_prog(t_philo *p);
 int		main(int ac, char **av);
 
 /* utils_philo.c */
@@ -63,10 +63,12 @@ int		ft_isdigit(int c);
 long	ft_usleep(int time);
 
 /* utils_phtreads.c */
+void	set_arr_philos(t_table *t, t_philo *p);
+void	set_arr_forks(t_table *p);
+void	init_threads(t_table *t);
 void	*philo_routine(void *args);
 void	*controller(void *args);
-void	create_philos(t_table *p);
-void	set_arr_philos(t_table *p);
-void	set_arr_forks(t_table *p);
+
+/* utils_simulator.c */
 
 #endif

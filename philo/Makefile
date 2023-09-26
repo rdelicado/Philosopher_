@@ -6,7 +6,7 @@
 #    By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/18 19:17:24 by rdelicad          #+#    #+#              #
-#    Updated: 2023/09/19 15:15:25 by rdelicad         ###   ########.fr        #
+#    Updated: 2023/09/26 21:51:17 by rdelicad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ CFLAGS    := -g -Wall -Wextra -Werror -pthread
 
 # --- Files ---
 
-SRCS      := leaks.c philo.c utils_philo.c utils_phtreads.c
+SRCS      := leaks.c philo.c utils_philo.c utils_phtreads.c utils_simulator.c
 
 OBJS = $(addprefix obj/,$(SRCS:.c=.o))
 
