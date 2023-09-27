@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/26 22:23:52 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/27 20:03:02 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_arr_philos(t_table *t, t_philo *p)
 	}
 }
 
-void	set_arr_forks(t_table *t)
+void	set_arr_forks(t_table *t, t_philo *p)
 {
 	int	i;
 	int	j;
@@ -44,6 +44,10 @@ void	set_arr_forks(t_table *t)
 	while (j > 0)
 	{
 		pthread_mutex_init(&t->arr_m[i], NULL);
+		p->l_fork = t->arr_m[i];
+		if (j != 0)
+			p->r_fork = t->arr_m[i + 1];
+		p->r_fork = t->arr_m[0];
 		i++;
 		j--;
 	}
@@ -62,64 +66,37 @@ void	init_threads(t_table *t)
     {
         if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine, &t->arr_p[i]))
             ft_error("No se pudo crear el hilo\n");
-		if (0 != pthread_join(t->arr_p[i].thread, NULL))
-            ft_error("Error al esperar al filósofo\n");
-        i++;
+        i += 2;
     }
-	i = 0;
+	i = 1;
 	while (i % 2 != 0 && i < t->n_philo)
     {
         if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine, &t->arr_p[i]))
             ft_error("No se pudo crear el hilo\n");
+        i += 2;
+    }
+	init_joins(t);
+}
+
+void	init_joins(t_table *t)
+{
+	int	i;
+
+	i = 0;
+	while (i % 2 == 0 && i < t->n_philo)
+    {
 		if (0 != pthread_join(t->arr_p[i].thread, NULL))
             ft_error("Error al esperar al filósofo\n");
-        i++;
+        i += 2;
+    }
+	i = 1;
+	while (i % 2 != 0 && i < t->n_philo)
+    {
+		if (0 != pthread_join(t->arr_p[i].thread, NULL))
+            ft_error("Error al esperar al filósofo\n");
+        i += 2;
     }
 }
-
-void	*philo_routine(void *args)
-{
-	/* printf("tiempo init %ld\n", time_start_prog(t) - t->time_init);
-	t->time_curr = time_start_prog(t);
-	for (int i = 0; i < 100; i++){
-		ft_usleep(200);
-		printf("tiempo init %ld\n", time_start_prog(t) - t->time_curr);
-	} */
-	t_philo	*p;
-
-	p = (t_philo *)args;
-	p->time_curr = time_start_prog(p);
-	//coger tenedor
-	//ft_usleep(200);
-	printf("%ld %d has taken a fork\n", time_start_prog(p) - p->time_curr, p->index);
-	/* //comer
-	printf("%d %d is eating", );
-	//dormir
-	printf("%d %d is sleeping", );
-	//pensar
-	printf("%d %d is thinking", );
-	//morir
-	printf("%d %d died", );
-	usleep(t->arr_p->eat_to_time * 1000); */
-/* ◦ timestamp_in_ms X has taken a fork → ha tomado un tenedor
-◦ timestamp_in_ms X is eating              → esta comiendo
-◦ timestamp_in_ms X is sleeping          → esta durmiendo
-◦ timestamp_in_ms X is thinking           → esta pensando
-◦ timestamp_in_ms X died                     → murio */
-	return (NULL);
-}
-
-void	*controller(void *args)
-{
-	t_table	*t;
-
-	t = (t_table *)args;
-	(void)t;
-	sleep(1);
-	printf("Controlador creado\n");
-	return (NULL);
-}
-
 
 
 /* 

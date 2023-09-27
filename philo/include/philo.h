@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/26 21:51:00 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/27 20:23:46 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 typedef struct s_philo
 {
 	pthread_t		thread;
+	pthread_mutex_t	l_fork;
+	pthread_mutex_t	r_fork;
 	int				index;
 	int				die_to_time;
 	int				eat_to_time;
@@ -64,11 +66,13 @@ long	ft_usleep(int time);
 
 /* utils_phtreads.c */
 void	set_arr_philos(t_table *t, t_philo *p);
-void	set_arr_forks(t_table *p);
+void	set_arr_forks(t_table *t, t_philo *p);
 void	init_threads(t_table *t);
-void	*philo_routine(void *args);
-void	*controller(void *args);
+void	init_joins(t_table *t);
 
 /* utils_simulator.c */
+void	*philo_routine(void *args);
+void	*controller(void *args);
+void	taken_fork(t_philo *p);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/26 21:47:17 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:53:02 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int ac, char **av)
 	checker_argv(&t, &p, av);
 	time_start_prog(&p);
 	set_arr_philos(&t, &p);
-	set_arr_forks(&t);
+	set_arr_forks(&t, &p);
 	init_threads(&t);
 	free(t.arr_p);
 	free(t.arr_m);
