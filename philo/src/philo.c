@@ -6,13 +6,13 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/27 19:53:02 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/28 15:45:07 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	checker_argv(t_table *t, t_philo *p, char **av)
+void	checker_argv(t_table *t, char **av)
 {
 	int	i;
 	int	j;
@@ -30,13 +30,13 @@ void	checker_argv(t_table *t, t_philo *p, char **av)
 		i++;
 	}
 	t->n_philo = ft_atoi(av[1]);
-	p->die_to_time = ft_atoi(av[2]);
-	p->eat_to_time = ft_atoi(av[3]);
-	p->sleep_to_time = ft_atoi(av[4]);
+	t->die_to_time = ft_atoi(av[2]);
+	t->eat_to_time = ft_atoi(av[3]);
+	t->sleep_to_time = ft_atoi(av[4]);
 	if (av[5] != NULL)
-		p->thing_to_time = ft_atoi(av[5]);
-	if (t->n_philo < 1 || t->n_philo > 200 || p->die_to_time < 1 || \
-		p->eat_to_time < 1 || p->sleep_to_time < 1)
+		t->thing_to_time = ft_atoi(av[5]);
+	if (t->n_philo < 1 || t->n_philo > 200 || t->die_to_time < 1 || \
+		t->eat_to_time < 1 || t->sleep_to_time < 1)
 		ft_error_help("The argument must be greater than 1");
 }
 
@@ -58,12 +58,12 @@ int	main(int ac, char **av)
 	if (ac < 5 || ac > 6)
 		ft_error("You must enter at least 4 arguments!");
 	//atexit(leaks);
-	init_data_philos(&p);
-	init_philo_struct(&t);
-	checker_argv(&t, &p, av);
+	init_data_table(&t);
+	init_data_philos(&p, &t);
+	checker_argv(&t, av);
 	time_start_prog(&p);
 	set_arr_philos(&t, &p);
-	set_arr_forks(&t, &p);
+	set_arr_forks(&t);
 	init_threads(&t);
 	free(t.arr_p);
 	free(t.arr_m);

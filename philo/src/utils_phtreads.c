@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/27 20:03:02 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:05:06 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_arr_philos(t_table *t, t_philo *p)
 	}
 }
 
-void	set_arr_forks(t_table *t, t_philo *p)
+void	set_arr_forks(t_table *t)
 {
 	int	i;
 	int	j;
@@ -44,10 +44,11 @@ void	set_arr_forks(t_table *t, t_philo *p)
 	while (j > 0)
 	{
 		pthread_mutex_init(&t->arr_m[i], NULL);
-		p->l_fork = t->arr_m[i];
-		if (j != 0)
-			p->r_fork = t->arr_m[i + 1];
-		p->r_fork = t->arr_m[0];
+		t->arr_p[i].l_fork = i + 1;
+		if (i == t->n_philo - 1)
+			t->arr_p[i].r_fork = 0;
+		else
+			t->arr_p[i].r_fork = i;
 		i++;
 		j--;
 	}
@@ -55,25 +56,16 @@ void	set_arr_forks(t_table *t, t_philo *p)
 
 void	init_threads(t_table *t)
 {
-	pthread_t control;
-    int i = 0;
+	//pthread_t control;
+    int i;
 
-    if (0 != pthread_create(&control, NULL, controller, t))
-        ft_error("No se pudo crear el controlador\n");
-    if (0 != pthread_join(control, NULL))
-        ft_error("Error al esperar al controlador\n");
-    while (i % 2 == 0 && i < t->n_philo)
+	i = 0;
+    while (i < t->n_philo)
     {
         if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine, &t->arr_p[i]))
             ft_error("No se pudo crear el hilo\n");
-        i += 2;
-    }
-	i = 1;
-	while (i % 2 != 0 && i < t->n_philo)
-    {
-        if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine, &t->arr_p[i]))
-            ft_error("No se pudo crear el hilo\n");
-        i += 2;
+        i++;
+		//ft_usleep(100);
     }
 	init_joins(t);
 }
@@ -97,24 +89,3 @@ void	init_joins(t_table *t)
         i += 2;
     }
 }
-
-
-/* 
-void* filosofo(void* arg) {
-    t_philo* philosopher = (t_philo*)arg;
-    int left_fork = philosopher->id;
-    int right_fork = (philosopher->id + 1) % NUM_FILOSOFOS;
-
-    // Acceder a los tenedores
-    pthread_mutex_lock(&table->forks[left_fork]);
-    pthread_mutex_lock(&table->forks[right_fork]);
-
-    // Realizar acciones de comer
-
-    // Liberar los tenedores
-    pthread_mutex_unlock(&table->forks[left_fork]);
-    pthread_mutex_unlock(&table->forks[right_fork]);
-
-    pthread_exit(NULL);
-}
- */
