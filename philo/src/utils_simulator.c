@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/28 20:13:33 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/28 21:55:52 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ void	*philo_routine(void *args)
 	p->time_curr = time_start_prog(p);
 	if (p->index % 2 == 0)
 		ft_usleep(10);
-	taken_fork(p);
-	printf(BLUE "[%ld] %d is sleeping\n" RESET, time_start_prog(p) - p->time_curr, p->index);
-	ft_usleep(p->t->sleep_to_time);
-	thinking_philo(p);
+	while (1)
+	{
+		taken_fork(p);
+		printf(BLUE "[%ld] %d is sleeping\n" RESET, time_start_prog(p) - p->time_curr, p->index);
+		ft_usleep(p->t->sleep_to_time);
+		thinking_philo(p);
+	}
 	//morir
 	//printf("%d %d died", time_start_prog(p) - p->time_curr, p->index);
 	return (NULL);
@@ -42,9 +45,24 @@ void	*philo_routine(void *args)
 
 void	taken_fork(t_philo *p)
 {
-		pthread_mutex_lock(&p->t->arr_m[p->l_fork]);
+	if (p->index % 2 == 0) 
+	{
+        // Filósofo par toma el tenedor izquierdo primero
+        pthread_mutex_lock(&p->t->arr_m[p->l_fork]);
+        printf(GREEN "[%ld] %d has taken a fork\n" RESET, time_start_prog(p) - p->time_curr, p->index);
 		pthread_mutex_lock(&p->t->arr_m[p->r_fork]);
-	if (p->t->arr_p[p->index + 1].flag_l == 0 && p->t->arr_p[p->index].flag_l == 0)
+		printf(GREEN "[%ld] %d has taken a fork\n" RESET, time_start_prog(p) - p->time_curr, p->index);
+		p->flag_l = 1;
+    } else 
+	{
+        // Filósofo impar toma el tenedor derecho primero
+        pthread_mutex_lock(&p->t->arr_m[p->r_fork]);
+        printf(GREEN "[%ld] %d has taken a fork\n" RESET, time_start_prog(p) - p->time_curr, p->index);
+		pthread_mutex_lock(&p->t->arr_m[p->l_fork]);
+		printf(GREEN "[%ld] %d has taken a fork\n" RESET, time_start_prog(p) - p->time_curr, p->index);
+		p->flag_l = 1;
+    }
+	/* if (p->t->arr_p[p->index + 1].flag_l == 0 && p->t->arr_p[p->index].flag_l == 0)
 	{
 		printf("filosof: %d\n", p->index);
 		printf("flag izq: %d\n", p->flag_l);
@@ -58,7 +76,8 @@ void	taken_fork(t_philo *p)
 		printf(RED "[%ld] %d is eating\n" RESET, time_start_prog(p) - p->time_curr, p->index);
 	}
 	else
-		thinking_philo(p);
+		thinking_philo(p); */
+	printf(RED "[%ld] %d is eating\n" RESET, time_start_prog(p) - p->time_curr, p->index);
 	ft_usleep(p->t->eat_to_time);
 	pthread_mutex_unlock(&p->t->arr_m[p->l_fork]);
 	pthread_mutex_unlock(&p->t->arr_m[p->r_fork]);
@@ -68,6 +87,7 @@ void	taken_fork(t_philo *p)
 void	thinking_philo(t_philo *p)
 {
 	printf(MAGENTA "[%ld] %d is thinking\n" RESET, time_start_prog(p) - p->time_curr, p->index);
+	ft_usleep(p->t->die_to_time / 3);
 	while (1)
 	{
 		ft_usleep(1);
@@ -78,3 +98,4 @@ void	thinking_philo(t_philo *p)
 		}
 	}
 }
+
