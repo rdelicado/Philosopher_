@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/28 18:05:06 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/29 19:57:12 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,24 @@ void	set_arr_forks(t_table *t)
 	int	i;
 	int	j;
 
-	j = t->n_philo;
+	j = t->n_philo - 1;
 	i = 0;
 	t->arr_m = malloc(sizeof(pthread_mutex_t) * t->n_philo);
 	if (!t->arr_m)
 		ft_error("Error al crear los tenedores\n");
-	while (j > 0)
+	while (i <= j)
 	{
-		pthread_mutex_init(&t->arr_m[i], NULL);
-		t->arr_p[i].l_fork = i + 1;
-		if (i == t->n_philo - 1)
-			t->arr_p[i].r_fork = 0;
+		pthread_mutex_init(&t->arr_p[i].l_fork, NULL);
+		if (i == j)
+			t->arr_p[i].r_fork = &t->arr_p[0].l_fork;
 		else
-			t->arr_p[i].r_fork = i;
+			t->arr_p[i].r_fork = &t->arr_p[i + 1].l_fork;
 		i++;
-		j--;
 	}
 }
 
 void	init_threads(t_table *t)
 {
-	//pthread_t control;
     int i;
 
 	i = 0;
@@ -67,6 +64,8 @@ void	init_threads(t_table *t)
         i++;
 		//ft_usleep(100);
     }
+	if (0 != pthread_create(&t->control, NULL, controller, NULL))
+            ft_error("No se pudo crear el hilo\n");
 	init_joins(t);
 }
 
@@ -75,17 +74,13 @@ void	init_joins(t_table *t)
 	int	i;
 
 	i = 0;
-	while (i % 2 == 0 && i < t->n_philo)
+	while (i < t->n_philo)
     {
 		if (0 != pthread_join(t->arr_p[i].thread, NULL))
             ft_error("Error al esperar al filósofo\n");
-        i += 2;
+        i++;
     }
-	i = 1;
-	while (i % 2 != 0 && i < t->n_philo)
-    {
-		if (0 != pthread_join(t->arr_p[i].thread, NULL))
+	if (0 != pthread_join(t->control, NULL))
             ft_error("Error al esperar al filósofo\n");
-        i += 2;
-    }
+	
 }

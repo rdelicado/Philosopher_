@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/28 17:17:21 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/29 19:56:29 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_table
 	int				sleep_to_time;
 	int				thing_to_time;
 	int				n_philo;
+	int				flag_m;
+	pthread_t		control;
 	t_philo			*arr_p;
 	pthread_mutex_t	*arr_m;
 }	t_table;
@@ -51,9 +53,9 @@ typedef struct s_table
 typedef struct s_philo
 {
 	pthread_t		thread;
+	pthread_mutex_t	l_fork;
+	pthread_mutex_t	*r_fork;
 	int				flag_l;
-	int				l_fork;
-	int				r_fork;
 	int				index;
 	long			time_init;
 	long			time_curr;
