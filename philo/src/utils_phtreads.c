@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/29 19:57:12 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/09/30 08:39:39 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,16 @@ void	init_threads(t_table *t)
 {
     int i;
 
+	if (0 != pthread_create(&t->control, NULL, controller, t))
+            ft_error("No se pudo crear el hilo\n");
+	ft_usleep(10);
 	i = 0;
     while (i < t->n_philo)
     {
         if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine, &t->arr_p[i]))
             ft_error("No se pudo crear el hilo\n");
         i++;
-		//ft_usleep(100);
     }
-	if (0 != pthread_create(&t->control, NULL, controller, NULL))
-            ft_error("No se pudo crear el hilo\n");
 	init_joins(t);
 }
 
@@ -73,6 +73,8 @@ void	init_joins(t_table *t)
 {
 	int	i;
 
+	if (0 != pthread_join(t->control, NULL))
+            ft_error("Error al esperar al filósofo\n");
 	i = 0;
 	while (i < t->n_philo)
     {
@@ -80,7 +82,5 @@ void	init_joins(t_table *t)
             ft_error("Error al esperar al filósofo\n");
         i++;
     }
-	if (0 != pthread_join(t->control, NULL))
-            ft_error("Error al esperar al filósofo\n");
 	
 }
