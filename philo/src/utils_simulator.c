@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/30 09:01:08 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/02 18:32:10 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	*philo_routine(void *args)
 
 void	taken_fork(t_philo *p)
 {
-	p->last_eat = time_start_prog;
 	if (pthread_mutex_lock(&p->l_fork) == 0)
 		printf(GREEN "[%ld] %d has taken a fork\n" RESET, time_start_prog(p) - p->time_curr, p->index);
 	if	(pthread_mutex_lock(&*p->r_fork) == 0)

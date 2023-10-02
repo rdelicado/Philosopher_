@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 08:52:33 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/29 18:41:41 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/02 18:31:22 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	init_data_table(t_table *t)
 void	init_data_philos(t_philo *p, t_table *t)
 {
 	p->t = t;
-	p->flag_l = 0;
 	p->index = -1;
 	p->time_init = -1;
 	p->time_curr = -1;
