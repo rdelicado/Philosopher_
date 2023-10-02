@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/30 08:51:57 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/02 19:31:45 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,12 @@ typedef struct s_philo t_philo;
 typedef struct s_table
 {
 	pthread_mutex_t	*arr_m;
+	pthread_mutex_t dead_mutex;
 	pthread_t		control;
 	t_philo			*arr_p;
+	long			time_init;
+	long			time_curr;
+	int				is_dead;
 	int				die_to_time;
 	int				eat_to_time;
 	int				sleep_to_time;
@@ -55,8 +59,6 @@ typedef struct s_philo
 	pthread_mutex_t	*r_fork;
 	pthread_t		thread;
 	t_table			*t;
-	long			time_init;
-	long			time_curr;
 	long			last_eat;
 	int				index;
 	int				optional;
@@ -69,7 +71,7 @@ void	init_data_philos(t_philo *p, t_table *t);
 
 /* philo.c */
 void	checker_argv(t_table *t, char **av);
-long	time_start_prog(t_philo *p);
+long	time_start_prog(t_table *t);
 int		main(int ac, char **av);
 
 /* utils_philo.c */
@@ -89,6 +91,6 @@ void	init_joins(t_table *t);
 void	*philo_routine(void *args);
 void	*controller(void *args);
 void	taken_fork(t_philo *p);
-void	thinking_philo(t_philo *p);
+void	ft_printf(t_philo *p, char *str);
 
 #endif
