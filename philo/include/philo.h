@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/02 19:31:45 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/03 19:43:33 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ typedef struct s_philo t_philo;
 
 typedef struct s_table
 {
+	pthread_mutex_t action;
+	pthread_mutex_t time;
 	pthread_mutex_t	*arr_m;
-	pthread_mutex_t dead_mutex;
 	pthread_t		control;
 	t_philo			*arr_p;
 	long			time_init;
@@ -91,6 +92,6 @@ void	init_joins(t_table *t);
 void	*philo_routine(void *args);
 void	*controller(void *args);
 void	taken_fork(t_philo *p);
-void	ft_printf(t_philo *p, char *str);
+void	printf_action(t_philo *p, char *str);
 
 #endif

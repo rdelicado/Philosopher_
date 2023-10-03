@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 08:52:33 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/02 19:32:16 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/03 17:31:58 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ void	leaks(void)
 
 void	init_data_table(t_table *t)
 {
-	pthread_mutex_init(&t->dead_mutex, NULL);
 	t->die_to_time = -1;
 	t->eat_to_time = -1;
 	t->sleep_to_time = -1;
 	t->thing_to_time = -1;
 	t->n_philo = -1;
-	t->is_dead = -1;
+	t->is_dead = 0;
 	t->time_init = -1;
 	t->time_curr = -1;
 	t->arr_p = NULL;
