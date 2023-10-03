@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/03 19:34:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:43:53 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ void	*philo_routine(void *args)
 	t_philo	*p;
 
 	p = (t_philo *)args;
+	//pthread_mutex_lock(&p->t->time);
 	p->t->time_curr = time_start_prog(p->t);
+	//pthread_mutex_unlock(&p->t->time);
 	if (p->index % 2 == 0)
 		ft_usleep(1);
 	while (p->t->is_dead != 1)

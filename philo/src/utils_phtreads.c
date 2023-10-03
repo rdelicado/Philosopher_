@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/03 19:45:02 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:45:18 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	set_arr_forks(t_table *t)
 		i++;
 	}
 	pthread_mutex_init(&t->action, NULL);
-	pthread_mutex_init(&t->time, NULL);
+	//pthread_mutex_init(&t->time, NULL);
 }
 
 void	init_threads(t_table *t)
@@ -67,9 +67,9 @@ void	init_threads(t_table *t)
     {
         if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine, &t->arr_p[i]))
             ft_error("No se pudo crear el hilo\n");
-		pthread_mutex_lock(&t->time);
+		//pthread_mutex_lock(&t->time);
 		t->arr_p[i].last_eat = time_start_prog(t);
-		pthread_mutex_unlock(&t->time);
+		//pthread_mutex_unlock(&t->time);
         i++;
     }
 	init_joins(t);

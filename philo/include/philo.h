@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/03 19:43:33 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:45:35 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_philo t_philo;
 typedef struct s_table
 {
 	pthread_mutex_t action;
-	pthread_mutex_t time;
+	//pthread_mutex_t time;
 	pthread_mutex_t	*arr_m;
 	pthread_t		control;
 	t_philo			*arr_p;
