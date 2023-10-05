@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/03 20:43:53 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:03:37 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	*controller(void *args)
 			if (time_start_prog(t) - t->arr_p[i].last_eat > t->die_to_time)
 			{
 				printf_action(&t->arr_p[i], "is_dead");
-				pthread_mutex_lock(&t->action);
+				//pthread_mutex_lock(&t->action);
 				t->is_dead = 1;
-				pthread_mutex_unlock(&t->action);
+				//pthread_mutex_unlock(&t->action);
 				break;
 			}
 			i++;
@@ -39,25 +39,24 @@ void	*controller(void *args)
 
 void	printf_action(t_philo *p, char *str)
 {
-	pthread_mutex_lock(&p->t->action);
+	//pthread_mutex_lock(&p->t->action);
 	if (p->t->is_dead != 1)
 	{
 		printf("[%ld] %d %s\n" RESET, time_start_prog(p->t) - p->t->time_curr, p->index,
 		str);
 	}
-	pthread_mutex_unlock(&p->t->action);
+	//pthread_mutex_unlock(&p->t->action);
 }
 
 void	*philo_routine(void *args)
 {
 	t_philo	*p;
+	int		i;
 
 	p = (t_philo *)args;
-	//pthread_mutex_lock(&p->t->time);
 	p->t->time_curr = time_start_prog(p->t);
-	//pthread_mutex_unlock(&p->t->time);
 	if (p->index % 2 == 0)
-		ft_usleep(1);
+		ft_usleep(0.01);
 	while (p->t->is_dead != 1)
 	{
 		printf_action(p, "is thinking");
@@ -69,6 +68,12 @@ void	*philo_routine(void *args)
 		}
 		else
 			break;
+	}
+	i = 0;
+	while (i++ < p->t->n_philo)
+	{
+		pthread_mutex_destroy(&p->l_fork);
+		pthread_mutex_destroy(p->r_fork);
 	}
 	return (NULL);
 }

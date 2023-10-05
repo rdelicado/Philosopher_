@@ -6,7 +6,7 @@
 #    By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/18 19:17:24 by rdelicad          #+#    #+#              #
-#    Updated: 2023/10/03 19:38:09 by rdelicad         ###   ########.fr        #
+#    Updated: 2023/10/04 15:44:26 by rdelicad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ NAME      := philo
 
 CC        := gcc
 
-CFLAGS    := -g -Wall -Wextra -Werror -pthread -fsanitize=thread
+CFLAGS    := -g -Wall -Wextra -Werror -pthread #-fsanitize=thread
 
 # --- Library ---
 
