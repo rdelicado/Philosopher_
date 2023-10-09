@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/07 19:59:11 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:49:00 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	checker_argv(t_table *t, char **av)
 		}
 		i++;
 	}
+	init_args(t, av);
+}
+
+void	init_args(t_table *t, char **av)
+{
 	t->n_philo = ft_atoi(av[1]);
 	t->die_to_time = ft_atoi(av[2]);
 	t->eat_to_time = ft_atoi(av[3]);
@@ -37,8 +42,6 @@ void	checker_argv(t_table *t, char **av)
 		t->num_meals = -1;
 	else
 		t->num_meals = ft_atoi(av[5]);
-	printf("%d\n", t->num_meals);
-	printf("num. comidas; %d\n", t->num_meals);
 	if (av[5] != NULL)
 		t->thing_to_time = ft_atoi(av[5]);
 	if (t->n_philo < 1 || t->n_philo > 200 || t->die_to_time < 1 || \
@@ -52,7 +55,6 @@ long	time_start_prog(void)
 
 	if (gettimeofday(&init, NULL) < 0)
 		ft_error("no time");
-	//t->time_init = (init.tv_sec * 1000) + (init.tv_usec / 1000);
 	return (init.tv_sec * 1000) + (init.tv_usec / 1000);
 }
 
@@ -67,7 +69,7 @@ void	free_threads(t_table *t)
 		pthread_mutex_destroy(t->arr_p[i].r_fork);
 		i++;
 	}
-	//pthread_mutex_destroy(&t->action);	
+	pthread_mutex_destroy(&t->table);	
 }
 
 int	main(int ac, char **av)

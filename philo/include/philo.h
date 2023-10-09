@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/09 18:25:17 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:23:56 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_table
 	int				sleep_to_time;
 	int				thing_to_time;
 	int				num_meals;
+	int				cont_eat;
 	int				n_philo;
 }	t_table;
 
@@ -72,6 +73,7 @@ void	init_data_philos(t_philo *p, t_table *t);
 
 /* philo.c */
 void	checker_argv(t_table *t, char **av);
+void	init_args(t_table *t, char **av);
 long	time_start_prog(void);
 int		main(int ac, char **av);
 void	free_threads(t_table *t);
@@ -93,6 +95,8 @@ void	init_joins(t_table *t);
 void	*philo_routine(void *args);
 void	*controller(void *args);
 void	printf_action(t_philo *p, char *str);
+int		ft_dead(t_table *t);
+
 
 /* utils_rutine */
 void	taken_fork(t_philo *p);

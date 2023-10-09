@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 08:52:33 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/08 15:50:11 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:27:02 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_data_table(t_table *t)
 	t->is_dead = 0;
 	t->time_curr = -1;
 	t->time_init = -1;
+	t->cont_eat = 0;
 	t->arr_p = NULL;
 	t->arr_m = NULL;
 }
