@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/08 09:37:28 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:29:11 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	set_arr_forks(t_table *t)
 			t->arr_p[i].r_fork = &t->arr_p[i + 1].l_fork;
 		i++;
 	}
-	pthread_mutex_init(&t->action, NULL);
-	pthread_mutex_init(&t->time, NULL);
+	pthread_mutex_init(&t->table, NULL);
 }
 
 void	init_threads(t_table *t)
@@ -65,9 +64,9 @@ void	init_threads(t_table *t)
     {
         if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine, &t->arr_p[i]))
             ft_error("No se pudo crear el hilo\n");
-		pthread_mutex_lock(&t->time);
+		pthread_mutex_lock(&t->table);
 		t->arr_p[i].last_eat = t->time_curr;
-		pthread_mutex_unlock(&t->time);
+		pthread_mutex_unlock(&t->table);
         i++;
     }	
 	if (0 != pthread_create(&t->control, NULL, controller, t))

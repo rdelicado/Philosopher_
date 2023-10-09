@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/08 15:55:37 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:38:15 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,19 @@ void	*controller(void *args)
 		i = 0;
 		while (i < t->n_philo)
 		{
+			pthread_mutex_lock(&t->table);
 			if (time_start_prog() - t->arr_p[i].last_eat > t->die_to_time)
-			//if (t->arr_p[i].last_eat - t->time_curr > t->die_to_time)
 			{
+				pthread_mutex_unlock(&t->table);
 				ft_usleep(1);
 				printf_action(&t->arr_p[i], "is_dead");
-				pthread_mutex_lock(&t->action);
+				pthread_mutex_lock(&t->table);
 				t->is_dead = 1;
-				pthread_mutex_unlock(&t->action);
+				pthread_mutex_unlock(&t->table);
 				break;
 			}
+			else
+				pthread_mutex_unlock(&t->table);
 			i++;
 		}
 	}
@@ -41,13 +44,13 @@ void	*controller(void *args)
 
 void	printf_action(t_philo *p, char *str)
 {
-	pthread_mutex_lock(&p->t->action);
+	pthread_mutex_lock(&p->t->table);
 	if (p->t->is_dead != 1)
 	{
 		printf("[%ld] %d %s\n" RESET, time_start_prog() - p->t->time_curr, p->index,
 		str);
 	}
-	pthread_mutex_unlock(&p->t->action);
+	pthread_mutex_unlock(&p->t->table);
 }
 
 void	*philo_routine(void *args)
@@ -57,10 +60,15 @@ void	*philo_routine(void *args)
 	p = (t_philo *)args;
 	if (p->index % 2 == 0)
 		ft_usleep(1);
-	pthread_mutex_lock(&p->t->action);
-	while (p->t->is_dead != 1)
+	while (1)
 	{
-		pthread_mutex_unlock(&p->t->action);
+		pthread_mutex_lock (&p->t->table);
+		if (p->t->is_dead == 1)
+		{
+			pthread_mutex_unlock(&p->t->table);
+			break;
+		}
+		pthread_mutex_unlock(&p->t->table);
 		taken_fork(p);
 		if (p->t->n_philo == 1)
 			return (NULL);

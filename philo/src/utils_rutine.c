@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/08 15:54:18 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:30:16 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	ft_eat(t_philo *p)
 	//printf("incio last time comida %d %lu\n",p->meals, p->last_eat);
 	printf_action(p, "is eating");
 	ft_usleep(p->t->eat_to_time);
-	pthread_mutex_lock(&p->t->time);
+	pthread_mutex_lock(&p->t->table);
 	p->last_eat = time_start_prog();
 	p->meals++;
-	pthread_mutex_unlock(&p->t->time);
+	pthread_mutex_unlock(&p->t->table);
 	if (p->meals == p->t->num_meals)
 		{
 			printf("num. comidas; %d\n", p->meals);
