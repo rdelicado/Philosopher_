@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/04 16:05:01 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/08 09:37:28 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,27 @@ void	set_arr_forks(t_table *t)
 			t->arr_p[i].r_fork = &t->arr_p[i + 1].l_fork;
 		i++;
 	}
-	//pthread_mutex_init(&t->action, NULL);
+	pthread_mutex_init(&t->action, NULL);
+	pthread_mutex_init(&t->time, NULL);
 }
 
 void	init_threads(t_table *t)
 {
     int i;
 
-	if (0 != pthread_create(&t->control, NULL, controller, t))
-            ft_error("No se pudo crear el hilo\n");
-	ft_usleep(10);
+	t->time_curr = time_start_prog();
 	i = 0;
     while (i < t->n_philo)
     {
         if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine, &t->arr_p[i]))
             ft_error("No se pudo crear el hilo\n");
-		t->arr_p[i].last_eat = time_start_prog(t);
+		pthread_mutex_lock(&t->time);
+		t->arr_p[i].last_eat = t->time_curr;
+		pthread_mutex_unlock(&t->time);
         i++;
     }	
+	if (0 != pthread_create(&t->control, NULL, controller, t))
+            ft_error("No se pudo crear el hilo\n");
 	init_joins(t);
 }
 

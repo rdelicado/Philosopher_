@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/03 20:44:54 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/07 19:59:11 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ void	checker_argv(t_table *t, char **av)
 	t->die_to_time = ft_atoi(av[2]);
 	t->eat_to_time = ft_atoi(av[3]);
 	t->sleep_to_time = ft_atoi(av[4]);
+	if (av[5] == NULL)
+		t->num_meals = -1;
+	else
+		t->num_meals = ft_atoi(av[5]);
+	printf("%d\n", t->num_meals);
+	printf("num. comidas; %d\n", t->num_meals);
 	if (av[5] != NULL)
 		t->thing_to_time = ft_atoi(av[5]);
 	if (t->n_philo < 1 || t->n_philo > 200 || t->die_to_time < 1 || \
@@ -40,14 +46,28 @@ void	checker_argv(t_table *t, char **av)
 		ft_error_help("The argument must be greater than 1");
 }
 
-long	time_start_prog(t_table *t)
+long	time_start_prog(void)
 {
 	struct timeval	init;
 
 	if (gettimeofday(&init, NULL) < 0)
 		ft_error("no time");
-	t->time_init = (init.tv_sec * 1000) + (init.tv_usec / 1000);
-	return (t->time_init);
+	//t->time_init = (init.tv_sec * 1000) + (init.tv_usec / 1000);
+	return (init.tv_sec * 1000) + (init.tv_usec / 1000);
+}
+
+void	free_threads(t_table *t)
+{
+	int	i;
+
+	i = 0;
+	while (i < t->n_philo)
+	{
+		pthread_mutex_destroy(&t->arr_p[i].l_fork);
+		pthread_mutex_destroy(t->arr_p[i].r_fork);
+		i++;
+	}
+	//pthread_mutex_destroy(&t->action);	
 }
 
 int	main(int ac, char **av)
@@ -61,10 +81,10 @@ int	main(int ac, char **av)
 	init_data_table(&t);
 	init_data_philos(&p, &t);
 	checker_argv(&t, av);
-	time_start_prog(&t);
 	set_arr_philos(&t, &p);
 	set_arr_forks(&t);
 	init_threads(&t);
+	free_threads(&t);
 	free(t.arr_p);
 	free(t.arr_m);
 	return (0);

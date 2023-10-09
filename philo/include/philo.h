@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/04 16:05:25 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/08 15:50:22 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef struct s_philo t_philo;
 
 typedef struct s_table
 {
-	//pthread_mutex_t action;
+	pthread_mutex_t	time;
+	pthread_mutex_t action;
 	pthread_mutex_t	*arr_m;
 	pthread_t		control;
 	t_philo			*arr_p;
@@ -50,6 +51,7 @@ typedef struct s_table
 	int				eat_to_time;
 	int				sleep_to_time;
 	int				thing_to_time;
+	int				num_meals;
 	int				n_philo;
 }	t_table;
 
@@ -61,7 +63,7 @@ typedef struct s_philo
 	t_table			*t;
 	long			last_eat;
 	int				index;
-	int				optional;
+	int				meals;
 }	t_philo;
 
 /* leaks.c */
@@ -71,8 +73,9 @@ void	init_data_philos(t_philo *p, t_table *t);
 
 /* philo.c */
 void	checker_argv(t_table *t, char **av);
-long	time_start_prog(t_table *t);
+long	time_start_prog(void);
 int		main(int ac, char **av);
+void	free_threads(t_table *t);
 
 /* utils_philo.c */
 void	ft_error_help(char *str);
@@ -90,7 +93,12 @@ void	init_joins(t_table *t);
 /* utils_simulator.c */
 void	*philo_routine(void *args);
 void	*controller(void *args);
-void	taken_fork(t_philo *p);
 void	printf_action(t_philo *p, char *str);
+
+/* utils_rutine */
+void	taken_fork(t_philo *p);
+void	ft_eat(t_philo *p);
+void	ft_sleep(t_philo *p);
+void	ft_thinking(t_philo *p);
 
 #endif

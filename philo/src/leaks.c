@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 08:52:33 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/03 17:31:58 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/08 15:50:11 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	init_data_table(t_table *t)
 	t->thing_to_time = -1;
 	t->n_philo = -1;
 	t->is_dead = 0;
-	t->time_init = -1;
 	t->time_curr = -1;
+	t->time_init = -1;
 	t->arr_p = NULL;
 	t->arr_m = NULL;
 }
@@ -35,5 +35,5 @@ void	init_data_philos(t_philo *p, t_table *t)
 {
 	p->t = t;
 	p->index = -1;
-	p->optional = -1;
+	p->meals = 0;
 }
