@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "gcc - Compilar y depurar archivo activo",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/philo",
+            "args": ["2", "12", "12", "12"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb"
+        }
+    ]
+}
