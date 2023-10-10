@@ -6,7 +6,7 @@
 #    By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/18 19:17:24 by rdelicad          #+#    #+#              #
-#    Updated: 2023/10/10 19:40:10 by rdelicad         ###   ########.fr        #
+#    Updated: 2023/10/10 22:10:05 by rdelicad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,9 @@ OBJS = $(addprefix obj/,$(SRCS:.c=.o))
 
 # --- Rules ---
 
-$(NAME): $(OBJS) $(LIBFT_PATH) $(MLX_PATH)
+$(NAME): $(OBJS)
 	@echo "$(YELLOW)$(BOLD)Compiling philo...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS) $(MLX_PATH) $(LIBFT_PATH) $(LIB_SYS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)$(BOLD)Done.$(RESET)"
 
 
@@ -62,14 +62,10 @@ $(FOLDER):
 
 all: $(NAME)
 
-bonus : $(NAME_BONUS)
-
 clean:
 	@echo "$(RED)$(BOLD)Cleaning objects from program...$(RESET)"
 	@rm -f $(OBJS) 
 	@echo "$(GREEN)$(BOLD)Done.$(RESET)"
-	@make clean -s -C $(MLX_DIR)
-	@make clean -s -C $(LIBFT_DIR)
 
 fclean:
 	@echo "$(RED)$(BOLD)Cleaning all files from program...$(RESET)"
@@ -78,6 +74,6 @@ fclean:
 
 re: fclean all
 
-solong: all clean
+philos: all clean
 
 .PHONY: all re fclean clean philo
