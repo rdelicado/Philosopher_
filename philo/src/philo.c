@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/09 18:49:00 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:59:43 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,5 @@ int	main(int ac, char **av)
 	init_threads(&t);
 	free_threads(&t);
 	free(t.arr_p);
-	free(t.arr_m);
 	return (0);
 }

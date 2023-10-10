@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/09 18:29:11 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:00:35 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,8 @@ void	set_arr_forks(t_table *t)
 
 	j = t->n_philo - 1;
 	i = 0;
-	t->arr_m = malloc(sizeof(pthread_mutex_t) * t->n_philo);
-	if (!t->arr_m)
-		ft_error("Error al crear los tenedores\n");
 	while (i <= j)
 	{
-		
 		pthread_mutex_init(&t->arr_p[i].l_fork, NULL);
 		if (i == j)
 			t->arr_p[i].r_fork = &t->arr_p[0].l_fork;
