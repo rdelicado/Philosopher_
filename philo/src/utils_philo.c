@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/09/25 23:55:06 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 19:37:40 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	ft_atoi(const char *str)
 
 	sign = 1;
 	num = 0;
-	while (*str == ' ' || *str == '\t' || *str == '\r' || *str == '\v' \
-	|| *str == '\n' || *str == '\f')
+	while (*str == ' ' || *str == '\t' || *str == '\r' || *str == '\v'
+		|| *str == '\n' || *str == '\f')
 		str++;
 	if (*str == '-' || *str == '+')
 	{

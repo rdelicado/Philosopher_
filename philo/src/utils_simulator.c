@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 18:57:21 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 19:39:52 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 void	*controller(void *args)
 {
 	t_table	*t;
-	int	i;
-
+	int		i;
 
 	t = (t_table *)args;
 	i = 0;
@@ -76,20 +75,20 @@ void	printf_action(t_philo *p, char *str)
 	if (p->t->is_dead != 1)
 	{
 		if (ft_strcmp(str, "died") == 0)
-			printf("%ld" RED " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
-			p->index, str);
+			printf("%ld" RED " %d %s\n" RESET, time_start_prog()
+				- p->t->time_curr, p->index, str);
 		else if (ft_strcmp(str, "is eating") == 0)
-			printf("%ld" YELLOW " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
-			p->index, str);
+			printf("%ld" YELLOW " %d %s\n" RESET, time_start_prog()
+				- p->t->time_curr, p->index, str);
 		else if (ft_strcmp(str, "has taken a fork") == 0)
-			printf("%ld" GREEN " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
-			p->index, str);
+			printf("%ld" GREEN " %d %s\n" RESET, time_start_prog()
+				- p->t->time_curr, p->index, str);
 		else if (ft_strcmp(str, "is thinking") == 0)
-			printf("%ld" BLUE " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
-			p->index ,str);
+			printf("%ld" BLUE " %d %s\n" RESET, time_start_prog()
+				- p->t->time_curr, p->index, str);
 		else if (ft_strcmp(str, "is sleeping") == 0)
-			printf("%ld" MAGENTA " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
-			p->index, str);
+			printf("%ld" MAGENTA " %d %s\n" RESET, time_start_prog()
+				- p->t->time_curr, p->index, str);
 	}
 	pthread_mutex_unlock(&p->t->table);
 }

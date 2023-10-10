@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 17:00:35 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 19:37:50 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	set_arr_philos(t_table *t, t_philo *p)
 	while (j > 0)
 	{
 		t->arr_p[i] = *p;
-        t->arr_p[i].index = i + 1;
+		t->arr_p[i].index = i + 1;
 		i++;
 		j--;
 	}
@@ -52,21 +52,22 @@ void	set_arr_forks(t_table *t)
 
 void	init_threads(t_table *t)
 {
-    int i;
+	int	i;
 
 	t->time_curr = time_start_prog();
 	i = 0;
-    while (i < t->n_philo)
-    {
-        if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine, &t->arr_p[i]))
-            ft_error("No se pudo crear el hilo\n");
+	while (i < t->n_philo)
+	{
+		if (0 != pthread_create(&t->arr_p[i].thread, NULL, philo_routine,
+				&t->arr_p[i]))
+			ft_error("No se pudo crear el hilo\n");
 		pthread_mutex_lock(&t->table);
 		t->arr_p[i].last_eat = t->time_curr;
 		pthread_mutex_unlock(&t->table);
-        i++;
-    }	
+		i++;
+	}
 	if (0 != pthread_create(&t->control, NULL, controller, t))
-            ft_error("No se pudo crear el hilo\n");
+		ft_error("No se pudo crear el hilo\n");
 	init_joins(t);
 }
 
@@ -75,12 +76,12 @@ void	init_joins(t_table *t)
 	int	i;
 
 	if (0 != pthread_join(t->control, NULL))
-            ft_error("Error al esperar al filósofo\n");
+		ft_error("Error al esperar al filósofo\n");
 	i = 0;
 	while (i < t->n_philo)
-    {
+	{
 		if (0 != pthread_join(t->arr_p[i].thread, NULL))
-            ft_error("Error al esperar al filósofo\n");
-        i++;
-    }	
+			ft_error("Error al esperar al filósofo\n");
+		i++;
+	}
 }
