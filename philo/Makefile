@@ -6,7 +6,7 @@
 #    By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/18 19:17:24 by rdelicad          #+#    #+#              #
-#    Updated: 2023/10/10 22:10:05 by rdelicad         ###   ########.fr        #
+#    Updated: 2023/10/10 22:19:00 by rdelicad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,12 +52,8 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)$(BOLD)Done.$(RESET)"
 
 
-$(OBJS) : obj/%.o: src/%.c $(FOLDER)
+$(OBJS) : obj/%.o: src/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-
-
-$(FOLDER):
-	mkdir obj
 
 
 all: $(NAME)
@@ -70,10 +66,9 @@ clean:
 fclean:
 	@echo "$(RED)$(BOLD)Cleaning all files from program...$(RESET)"
 	@rm -f $(NAME) $(OBJS)
+	@echo "$(GREEN)$(BOLD)Done.$(RESET)"
 	
 
 re: fclean all
 
-philos: all clean
-
-.PHONY: all re fclean clean philo
+.PHONY: all re fclean clean
