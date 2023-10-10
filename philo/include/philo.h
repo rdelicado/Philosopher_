@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 19:45:30 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:15:39 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_philo
 void					leaks(void);
 void					init_data_table(t_table *t);
 void					init_data_philos(t_philo *p, t_table *t);
+int						ft_strcmp(const char *s1, const char *s2);
 
 /* philo.c */
 void					checker_argv(t_table *t, char **av);
@@ -102,6 +103,5 @@ void					taken_fork(t_philo *p);
 void					ft_eat(t_philo *p);
 void					ft_sleep(t_philo *p);
 int						ft_num_meals(t_philo *p);
-int						ft_strcmp(const char *s1, const char *s2);
 
 #endif

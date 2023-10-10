@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 08:52:33 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 19:37:30 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:15:11 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,16 @@ void	init_data_philos(t_philo *p, t_table *t)
 	p->t = t;
 	p->index = -1;
 	p->meals = 0;
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+	{
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

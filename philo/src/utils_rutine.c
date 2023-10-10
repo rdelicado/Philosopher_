@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 19:39:45 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:14:57 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,4 @@ int	ft_num_meals(t_philo *p)
 		return (1);
 	}
 	return (0);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] && s2[i])
-	{
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
