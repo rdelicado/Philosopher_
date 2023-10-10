@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 18:37:57 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:57:21 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	time_to_die(t_table *t, int i)
 		pthread_mutex_unlock(&t->table);
 	return (0);
 }
-
 
 void	printf_action(t_philo *p, char *str)
 {
