@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 17:03:47 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:37:57 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,10 @@
 void	*controller(void *args)
 {
 	t_table	*t;
-
-	t = (t_table *)args;
-	ft_dead(t);
-	return (NULL);
-}
-
-int	ft_dead(t_table *t)
-{
 	int	i;
 
+
+	t = (t_table *)args;
 	i = 0;
 	while (t->is_dead != 1)
 	{
@@ -39,31 +33,63 @@ int	ft_dead(t_table *t)
 			}
 			else
 				pthread_mutex_unlock(&t->table);
-			pthread_mutex_lock(&t->table);
-			if (time_start_prog() - t->arr_p[i].last_eat > t->die_to_time)
-			{
-				pthread_mutex_unlock(&t->table);
-				ft_usleep(1);
-				printf_action(&t->arr_p[i], "is_dead");
-				pthread_mutex_lock(&t->table);
-				t->is_dead = 1;
-				pthread_mutex_unlock(&t->table);
-				return (1);
-			}
-			else
-				pthread_mutex_unlock(&t->table);
+			if (time_to_die(t, i))
+				return (NULL);
 			i++;
 		}
 	}
+	return (NULL);
+}
+
+int	ft_dead(t_philo *p)
+{
+	pthread_mutex_lock(&p->t->table);
+	if (p->t->is_dead == 1)
+	{
+		pthread_mutex_unlock(&p->t->table);
+		return (1);
+	}
 	return (0);
 }
+
+int	time_to_die(t_table *t, int i)
+{
+	pthread_mutex_lock(&t->table);
+	if (time_start_prog() - t->arr_p[i].last_eat > t->die_to_time)
+	{
+		pthread_mutex_unlock(&t->table);
+		ft_usleep(1);
+		printf_action(&t->arr_p[i], "died");
+		pthread_mutex_lock(&t->table);
+		t->is_dead = 1;
+		pthread_mutex_unlock(&t->table);
+		return (1);
+	}
+	else
+		pthread_mutex_unlock(&t->table);
+	return (0);
+}
+
 
 void	printf_action(t_philo *p, char *str)
 {
 	pthread_mutex_lock(&p->t->table);
 	if (p->t->is_dead != 1)
 	{
-		printf("[%ld] %d %s\n" RESET, time_start_prog() - p->t->time_curr,
+		if (ft_strcmp(str, "died") == 0)
+			printf("%ld" RED " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
+			p->index, str);
+		else if (ft_strcmp(str, "is eating") == 0)
+			printf("%ld" YELLOW " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
+			p->index, str);
+		else if (ft_strcmp(str, "has taken a fork") == 0)
+			printf("%ld" GREEN " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
+			p->index, str);
+		else if (ft_strcmp(str, "is thinking") == 0)
+			printf("%ld" BLUE " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
+			p->index ,str);
+		else if (ft_strcmp(str, "is sleeping") == 0)
+			printf("%ld" MAGENTA " %d %s\n" RESET, time_start_prog() - p->t->time_curr,
 			p->index, str);
 	}
 	pthread_mutex_unlock(&p->t->table);
@@ -78,12 +104,9 @@ void	*philo_routine(void *args)
 		ft_usleep(1);
 	while (1)
 	{
-		pthread_mutex_lock(&p->t->table);
-		if (p->t->is_dead == 1)
-		{
-			pthread_mutex_unlock(&p->t->table);
+		printf_action(p, "is thinking");
+		if (ft_dead(p))
 			break ;
-		}
 		pthread_mutex_unlock(&p->t->table);
 		taken_fork(p);
 		if (p->t->n_philo == 1)
@@ -91,15 +114,9 @@ void	*philo_routine(void *args)
 		ft_eat(p);
 		pthread_mutex_unlock(&p->l_fork);
 		pthread_mutex_unlock(&*p->r_fork);
-		if (p->meals == p->t->num_meals)
-		{
-			pthread_mutex_lock(&p->t->table);
-			p->t->cont_eat++;
-			pthread_mutex_unlock(&p->t->table);
+		if (ft_num_meals(p))
 			return (NULL);
-		}
 		ft_sleep(p);
-		ft_thinking(p);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/09 20:08:32 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:01:46 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,26 @@ void	ft_sleep(t_philo *p)
 	ft_usleep(p->t->sleep_to_time);
 }
 
-void	ft_thinking(t_philo *p)
+int	ft_num_meals(t_philo *p)
 {
-	printf_action(p, "is thinking");
+	if (p->meals == p->t->num_meals)
+	{
+		pthread_mutex_lock(&p->t->table);
+		p->t->cont_eat++;
+		pthread_mutex_unlock(&p->t->table);
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+	{
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

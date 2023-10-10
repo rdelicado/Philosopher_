@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 16:59:13 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:02:06 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,15 @@ void	init_joins(t_table *t);
 void	*philo_routine(void *args);
 void	*controller(void *args);
 void	printf_action(t_philo *p, char *str);
-int		ft_dead(t_table *t);
+int		ft_dead(t_philo *p);
+int		time_to_die(t_table *t, int i);
 
 
 /* utils_rutine */
 void	taken_fork(t_philo *p);
 void	ft_eat(t_philo *p);
 void	ft_sleep(t_philo *p);
-void	ft_thinking(t_philo *p);
+int		ft_num_meals(t_philo *p);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif
