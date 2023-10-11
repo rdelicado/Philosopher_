@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 21:14:57 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/11 23:50:14 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	taken_fork(t_philo *p)
 		printf_action(p, "has taken a fork");
 	}
 	else
+	{
+		pthread_mutex_unlock(&p->l_fork);
 		return ;
+	}
 }
 
 void	ft_eat(t_philo *p)

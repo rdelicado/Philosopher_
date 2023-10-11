@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 19:39:52 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/11 23:48:58 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void	*philo_routine(void *args)
 		if (p->t->n_philo == 1)
 			return (NULL);
 		ft_eat(p);
-		pthread_mutex_unlock(&p->l_fork);
 		pthread_mutex_unlock(&*p->r_fork);
+		pthread_mutex_unlock(&p->l_fork);
 		if (ft_num_meals(p))
 			return (NULL);
 		ft_sleep(p);
