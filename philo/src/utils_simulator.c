@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/12 12:00:03 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:11:41 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	*controller(void *args)
 
 	t = (t_table *)args;
 	i = 0;
-	while (t->is_dead != 1)
+	//while (t->is_dead != 1)
+	while (1)
 	{
 		i = 0;
 		while (i < t->n_philo)
@@ -28,7 +29,7 @@ void	*controller(void *args)
 			if (t->n_philo == t->cont_eat)
 			{
 				pthread_mutex_unlock(&t->table);
-				return (0);
+				return (NULL);
 			}
 			else
 				pthread_mutex_unlock(&t->table);
@@ -61,7 +62,7 @@ int	time_to_die(t_table *t, int i)
 	{
 		pthread_mutex_unlock(&t->table);
 		printf("%ld" RED " %d died\n" RESET, time_start_prog()
-				- t->time_curr, t->arr_p->index);
+				- t->time_curr, t->arr_p[i].index);
 		pthread_mutex_lock(&t->table);
 		t->is_dead = 1;
 		pthread_mutex_unlock(&t->table);
@@ -101,8 +102,8 @@ void	*philo_routine(void *args)
 	t_philo	*p;
 
 	p = (t_philo *)args;
-	/* if (p->index % 2 == 0)
-		ft_usleep(1, p->t); */
+	if (p->index % 2 == 0)
+		ft_usleep(1, p->t);
 	while (1)
 	{
 		printf_action(p, "is thinking");
