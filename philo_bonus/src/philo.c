@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 19:42:35 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:46:42 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ int	main(int ac, char **av)
 	init_data_table(&t);
 	init_data_philos(&p, &t);
 	checker_argv(&t, av);
-	set_arr_philos(&t, &p);
-	set_arr_forks(&t);
-	init_threads(&t);
-	free_threads(&t);
-	free(t.arr_p);
+	set_philos(&t, &p);
+	
 	return (0);
 }

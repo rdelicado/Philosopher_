@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 21:15:39 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:46:08 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,23 +85,14 @@ int						ft_atoi(const char *str);
 int						ft_isdigit(int c);
 long					ft_usleep(int time);
 
-/* utils_phtreads.c */
-void					set_arr_philos(t_table *t, t_philo *p);
-void					set_arr_forks(t_table *t);
-void					init_threads(t_table *t);
-void					init_joins(t_table *t);
+/* create_processes.c */
+void					set_philos(t_table *t, t_philo *p);
+
 
 /* utils_simulator.c */
-void					*philo_routine(void *args);
-void					*controller(void *args);
-void					printf_action(t_philo *p, char *str);
-int						ft_dead(t_philo *p);
-int						time_to_die(t_table *t, int i);
+
 
 /* utils_rutine */
-void					taken_fork(t_philo *p);
-void					ft_eat(t_philo *p);
-void					ft_sleep(t_philo *p);
-int						ft_num_meals(t_philo *p);
+
 
 #endif
