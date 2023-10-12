@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/11 23:50:14 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/12 00:48:47 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	taken_fork(t_philo *p)
 void	ft_eat(t_philo *p)
 {
 	printf_action(p, "is eating");
-	ft_usleep(p->t->eat_to_time);
+	ft_usleep(p->t->eat_to_time, p->t);
 	pthread_mutex_lock(&p->t->table);
 	p->last_eat = time_start_prog();
 	p->meals++;
@@ -41,7 +41,7 @@ void	ft_eat(t_philo *p)
 void	ft_sleep(t_philo *p)
 {
 	printf_action(p, "is sleeping");
-	ft_usleep(p->t->sleep_to_time);
+	ft_usleep(p->t->sleep_to_time, p->t);
 }
 
 int	ft_num_meals(t_philo *p)

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 21:15:39 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/12 00:43:21 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void					ft_error_help(char *str);
 void					ft_error(char *str);
 int						ft_atoi(const char *str);
 int						ft_isdigit(int c);
-long					ft_usleep(int time);
+long					ft_usleep(int time, t_table *t);
 
 /* utils_phtreads.c */
 void					set_arr_philos(t_table *t, t_philo *p);

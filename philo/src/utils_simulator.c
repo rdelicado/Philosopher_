@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/11 23:48:58 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:55:46 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ int	time_to_die(t_table *t, int i)
 	pthread_mutex_lock(&t->table);
 	if (time_start_prog() - t->arr_p[i].last_eat > t->die_to_time)
 	{
-		pthread_mutex_unlock(&t->table);
-		ft_usleep(1);
-		printf_action(&t->arr_p[i], "died");
-		pthread_mutex_lock(&t->table);
+		//pthread_mutex_unlock(&t->table);
+		printf("%ld" RED " %d died\n" RESET, time_start_prog()
+				- t->time_curr, t->arr_p->index);
+		ft_usleep(1, t);
+		//pthread_mutex_lock(&t->table);
 		t->is_dead = 1;
 		pthread_mutex_unlock(&t->table);
 		return (1);
@@ -99,7 +100,7 @@ void	*philo_routine(void *args)
 
 	p = (t_philo *)args;
 	if (p->index % 2 == 0)
-		ft_usleep(1);
+		ft_usleep(1, p->t);
 	while (1)
 	{
 		printf_action(p, "is thinking");
