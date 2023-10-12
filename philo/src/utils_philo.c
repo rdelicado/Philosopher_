@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/12 00:50:18 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:50:13 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,14 @@ long	ft_usleep(int time, t_table *t)
 	time_start = (init.tv_sec * 1000) + (init.tv_usec / 1000);
 	while (1)
 	{
+		pthread_mutex_lock(&t->table);
 		if (t->is_dead)
+		{
+			pthread_mutex_unlock(&t->table);
 			break ;
+		}
+		else
+			pthread_mutex_unlock(&t->table);
 		if (gettimeofday(&init, NULL) < 0)
 			ft_error("no time");
 		time_finish = (init.tv_sec * 1000) + (init.tv_usec / 1000);

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/12 00:48:47 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:41:24 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_eat(t_philo *p)
 	p->last_eat = time_start_prog();
 	p->meals++;
 	pthread_mutex_unlock(&p->t->table);
+	pthread_mutex_unlock(&*p->r_fork);
+	pthread_mutex_unlock(&p->l_fork);
 }
 
 void	ft_sleep(t_philo *p)
