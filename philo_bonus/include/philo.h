@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/12 13:46:08 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:50:56 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
 
 // Definiciones de colores
 # define RESET "\x1B[0m"
@@ -39,9 +40,9 @@ typedef struct s_philo	t_philo;
 
 typedef struct s_table
 {
-	pthread_mutex_t		table;
-	pthread_t			control;
-	t_philo				*arr_p;
+	sem_t				control;
+	pid_t				*child_pids;
+	pid_t				pid;
 	long				time_init;
 	long				time_curr;
 	int					is_dead;
@@ -56,13 +57,12 @@ typedef struct s_table
 
 typedef struct s_philo
 {
-	pthread_mutex_t		l_fork;
-	pthread_mutex_t		*r_fork;
-	pthread_t			thread;
 	t_table				*t;
 	long				last_eat;
+	long				time_init;
 	int					index;
 	int					meals;
+	int					pid;
 }						t_philo;
 
 /* leaks.c */
@@ -76,7 +76,7 @@ void					checker_argv(t_table *t, char **av);
 void					init_args(t_table *t, char **av);
 long					time_start_prog(void);
 int						main(int ac, char **av);
-void					free_threads(t_table *t);
+
 
 /* utils_philo.c */
 void					ft_error_help(char *str);
@@ -87,7 +87,10 @@ long					ft_usleep(int time);
 
 /* create_processes.c */
 void					set_philos(t_table *t, t_philo *p);
-
+void					routine_philos(t_philo *p);
+void					printf_action(t_philo *p, char *str);
+void					routine_table(t_table *t);
+void					init_semaphores(t_table *t);
 
 /* utils_simulator.c */
 

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/12 13:46:42 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:48:39 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,6 @@ long	time_start_prog(void)
 	return (nbr);
 }
 
-void	free_threads(t_table *t)
-{
-	int	i;
-
-	i = 0;
-	while (i < t->n_philo)
-	{
-		pthread_mutex_destroy(&t->arr_p[i].l_fork);
-		pthread_mutex_destroy(t->arr_p[i].r_fork);
-		i++;
-	}
-	pthread_mutex_destroy(&t->table);
-}
-
 int	main(int ac, char **av)
 {
 	t_table	t;
@@ -85,7 +71,9 @@ int	main(int ac, char **av)
 	init_data_table(&t);
 	init_data_philos(&p, &t);
 	checker_argv(&t, av);
+	init_semaphores(&t);
 	set_philos(&t, &p);
+	free(t.child_pids);
 	
 	return (0);
 }
