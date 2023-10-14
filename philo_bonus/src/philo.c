@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/13 13:48:39 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:29:50 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,13 @@ int	main(int ac, char **av)
 	if (ac < 5 || ac > 6)
 		ft_error("You must enter at least 4 arguments!");
 	// atexit(leaks);
+	preclean();
 	init_data_table(&t);
 	init_data_philos(&p, &t);
 	checker_argv(&t, av);
 	init_semaphores(&t);
 	set_philos(&t, &p);
-	free(t.child_pids);
+	clean(&t);
 	
 	return (0);
 }

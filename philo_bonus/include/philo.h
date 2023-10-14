@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/13 13:50:56 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:02:23 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <signal.h>
+# include <fcntl.h>
 
 // Definiciones de colores
 # define RESET "\x1B[0m"
@@ -40,7 +41,7 @@ typedef struct s_philo	t_philo;
 
 typedef struct s_table
 {
-	sem_t				control;
+	sem_t				*sem;
 	pid_t				*child_pids;
 	pid_t				pid;
 	long				time_init;
@@ -90,10 +91,11 @@ void					set_philos(t_table *t, t_philo *p);
 void					routine_philos(t_philo *p);
 void					printf_action(t_philo *p, char *str);
 void					routine_table(t_table *t);
+
+/* utils_semaphores.c */
 void					init_semaphores(t_table *t);
-
-/* utils_simulator.c */
-
+void					preclean();
+void					clean(t_table *t);
 
 /* utils_rutine */
 

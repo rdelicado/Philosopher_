@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/13 14:32:52 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:10:13 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ void	set_philos(t_table *t, t_philo *p)
 	while (i < t->n_philo)
 	{
 		t->pid = fork();
-		if (t->pid == 0) //proceso hijo
+		if (t->pid == 0)
 		{
 			p->index = i + 1;
-			//printf("philo %d, inicio %ld\n", p->index, time_start_prog());
-			//ft_usleep(1000);
 			routine_philos(p);
 			exit(0);
 		}
@@ -44,52 +42,49 @@ void	set_philos(t_table *t, t_philo *p)
 	routine_table(t);
 }
 
-void	init_semaphores(t_table *t)
-{
-	sem_init(&t->control, 0, 0);
-}
-
 void	routine_table(t_table *t)
 {
+	(void)t;
 	/* sem_wait(&t->control);
 	t->is_dead = 1;
 	sem_post(&t->control); */
 	while (waitpid(-1, NULL, 0) > 0) {}
-	sem_destroy(&t->control);
+	
 	//waitpid(-1, NULL, 0);	
 }
 
 void	routine_philos(t_philo *p)
 {
-	int y;
+	if (p->index % 2 == 0)
+		ft_usleep(1);
 	printf("pid %d\n", p->pid);
-	scanf("%d", &y);
-	//while (1)
-	//{
-		//sem_wait(&p->t->control);
+	while (1)
+	{
+		//ft_usleep(1000);
+		sem_wait(p->t->sem);
 		if (p->t->is_dead == 1)
 		{
-			//sem_post(&p->t->control);
+			sem_post(p->t->sem);
 			return;
 		}
-		
+		else
+			sem_post(p->t->sem);
 		printf_action(p, "is thinking");
-		if (p->index == 3)
+		if (time_start_prog() - p->time_init > 100)
 		{
+			sem_wait(p->t->sem);
 			p->t->is_dead = 1;
-			//sem_post(&p->t->control);
+			sem_post(p->t->sem);
 			//printf("valor; %d\n", p->t->is_dead);
 			return;
 		}
-		//sem_post(&p->t->control);
-	//}
+	}
 	exit (0);
 }
 
 void	printf_action(t_philo *p, char *str)
 {
-	//pthread_mutex_lock(&p->t->table);
-	//sem_wait(&p->t->control);
+	sem_wait(p->t->sem);
 	if (p->t->is_dead != 1)
 	{
 		if (ft_strcmp(str, "died") == 0)
@@ -108,6 +103,6 @@ void	printf_action(t_philo *p, char *str)
 			printf("%ld" MAGENTA " %d %s\n" RESET, time_start_prog()
 				- p->time_init, p->index, str);
 	}
-	//sem_post(&p->t->control);
-	//pthread_mutex_unlock(&p->t->table);
+	sem_post(p->t->sem);
 }
+
