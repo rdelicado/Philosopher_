@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 22:02:20 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 22:13:47 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,9 @@ int	time_to_die(t_table *t, int i)
 
 void	printf_action(t_philo *p, char *str)
 {
-	//pthread_mutex_lock(&p->t->table);
-	//if (p->t->is_dead != 1)
-	if (!ft_dead(p))
+	pthread_mutex_lock(&p->t->table);
+	if (p->t->is_dead != 1)
 	{
-		//pthread_mutex_unlock(&p->t->table);
-		pthread_mutex_lock(&p->t->table);
 		if (ft_strcmp(str, "died") == 0)
 			printf("%ld" RED " %d %s\n" RESET, time_start_prog()
 				- p->t->time_curr, p->index, str);
@@ -99,8 +96,9 @@ void	printf_action(t_philo *p, char *str)
 		else if (ft_strcmp(str, "is sleeping") == 0)
 			printf("%ld" MAGENTA " %d %s\n" RESET, time_start_prog()
 				- p->t->time_curr, p->index, str);
-		pthread_mutex_unlock(&p->t->table);
 	}
+	pthread_mutex_unlock(&p->t->table);
+		
 }
 
 void	*philo_routine(void *args)
@@ -117,14 +115,24 @@ void	*philo_routine(void *args)
 	{
 		/* if (ft_dead(p))
 			break ; */
-		taken_fork(p);
-		if (p->t->n_philo == 1)
-			return (NULL);
-		ft_eat(p);
-		if (ft_num_meals(p))
-			return (NULL);
-		ft_sleep(p);
-		printf_action(p, "is thinking");
+		pthread_mutex_lock(&p->t->table);
+		if (p->t->is_dead != 1)
+		{
+			pthread_mutex_unlock(&p->t->table);
+			taken_fork(p);
+			if (p->t->n_philo == 1)
+				return (NULL);
+			ft_eat(p);
+			if (ft_num_meals(p))
+				return (NULL);
+			ft_sleep(p);
+			printf_action(p, "is thinking");
+		}
+		else
+		{
+			pthread_mutex_unlock(&p->t->table);
+			break;
+		}
 	}
 	return (NULL);
 }
