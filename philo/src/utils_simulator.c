@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 21:53:37 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 22:02:20 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ void	*philo_routine(void *args)
 	}
 	while (1)
 	{
-		if (ft_dead(p))
-			break ;
+		/* if (ft_dead(p))
+			break ; */
 		taken_fork(p);
 		if (p->t->n_philo == 1)
 			return (NULL);
