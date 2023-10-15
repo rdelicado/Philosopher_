@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 11:43:10 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:17:55 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef struct s_philo
 	t_table				*t;
 	pid_t				pid;
 	long				last_eat;
-	// long				time_init;
 	int					index;
 	int					meals;
 }						t_philo;
@@ -89,6 +88,7 @@ long					ft_usleep(int time, t_table *t);
 
 /* utils_semaphores.c */
 void					set_philos(t_table *t, t_philo *p);
+void					set_arr_philos(t_table *t, t_philo *p, int i);
 void					init_semaphores(t_table *t);
 void					preclean(t_table *t);
 void					clean(t_table *t);

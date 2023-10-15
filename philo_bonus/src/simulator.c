@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 11:57:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:43:21 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,32 @@ void	routine_table(t_table *t)
 			{
 				sem_post(t->sem);
 				all_rt = true;
-				break ;
+				clean(t);
+				//break ;
 			}
 			else
 				sem_post(t->sem);
 			if (time_to_die(t, i))
 			{
 				death_occurred = true;
-				break ;
+				clean(t);
+				//break ;
 			}
 			i++;
 		}
-		if (all_rt || death_occurred)
+		/* if (all_rt || death_occurred)
 		{
 			while (waitpid(-1, NULL, 0) > 0)
-				;
+				; 
 			break ;
-		}
+		} */
 	}
-	i = 0;
-	while (i < t->n_philo)
-	{
-		kill(t->child_pids[i], SIGTERM);
-		i++;
-	}
-	clean(t);
+	//exit(EXIT_SUCCESS);
+	//clean(t);
 }
 
 void	routine_philos(t_philo *p)
 {
-	/* if (p->index % 2 == 0)
-		ft_usleep(1, p->t); */
 	while (1)
 	{
 		printf_action(p, "is thinking");
@@ -72,11 +67,11 @@ void	routine_philos(t_philo *p)
 			break ;
 		ft_eat(p);
 		if (ft_num_meals(p))
-			break ; // cambiar para salir de la rutina
+			break ;
 		ft_sleep(p);
 	}
-	kill(p->pid, SIGTERM);
-	//clean(p->t); // cambiar para salir de la rutina
+	//exit(EXIT_SUCCESS);
+	clean(p->t);
 }
 
 int	ft_died(t_philo *p)
@@ -98,12 +93,12 @@ int	time_to_die(t_table *t, int i)
 	if (time_start_prog() - t->arr_p[i].last_eat > t->die_to_time)
 	{
 		sem_post(t->sem);
-		printf("%ld" RED " %d died\n" RESET, time_start_prog() - t->time_init, i
-			+ 1);
+		printf("%ld" RED " %d died\n" RESET, time_start_prog() - t->time_init,
+			t->arr_p[i].index);
+		printf("%ld %d\n", time_start_prog() - t->arr_p[i].last_eat, t->die_to_time);
 		sem_wait(t->sem);
 		t->is_dead = 1;
 		sem_post(t->sem);
-		kill(t->child_pids[i], SIGTERM);
 		return (1);
 	}
 	else

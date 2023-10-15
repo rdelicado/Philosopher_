@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 11:45:51 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:42:30 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	set_philos(t_table *t, t_philo *p)
 	t->arr_p = malloc(sizeof(t_philo) * t->n_philo);
 	if (!t->arr_p)
 		ft_error("No se pudo crear array de philos");
-	i = 0;
 	p->t->time_init = time_start_prog();
 	p->last_eat = time_start_prog();
+	i = 0;
 	while (i < t->n_philo)
 	{
 		t->pid = fork();
@@ -35,14 +35,18 @@ void	set_philos(t_table *t, t_philo *p)
 			exit(0);
 		}
 		else
-		{
-			t->arr_p[i] = *p;
-			t->child_pids[i] = t->pid;
-			p->pid = t->child_pids[i];
-		}
+			set_arr_philos(t, p, i);
 		i++;
 	}
 	routine_table(t);
+}
+
+void	set_arr_philos(t_table *t, t_philo *p, int i)
+{
+	t->arr_p[i] = *p;
+	t->arr_p[i].index = i + 1;
+	t->child_pids[i] = t->pid;
+	p->pid = t->child_pids[i];
 }
 
 void	preclean(t_table *t)
@@ -54,10 +58,18 @@ void	preclean(t_table *t)
 
 void	clean(t_table *t)
 {
+	int	i;
+
 	sem_close(t->forks);
 	sem_close(t->sem);
 	sem_unlink("/control");
 	sem_unlink("/forks");
+	i = 0;
+	while (i < t->n_philo)
+	{
+		kill(t->arr_p[i].pid, SIGKILL);
+		i++;
+	}
 	free(t->child_pids);
 	free(t->arr_p);
 }
