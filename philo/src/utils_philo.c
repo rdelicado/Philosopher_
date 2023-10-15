@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 20:20:24 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:09:26 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	ft_error(char *str)
 	exit(1);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
-	int	num;
-	int	sign;
+	long	num;
+	int		sign;
 
 	sign = 1;
 	num = 0;

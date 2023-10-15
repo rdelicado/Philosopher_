@@ -6,13 +6,14 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/12 11:12:29 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:09:20 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <limits.h>
 # include <pthread.h>
 # include <semaphore.h>
 # include <stdio.h>
@@ -42,16 +43,15 @@ typedef struct s_table
 	pthread_mutex_t		table;
 	pthread_t			control;
 	t_philo				*arr_p;
+	long				n_philo;
 	long				time_init;
 	long				time_curr;
-	int					is_dead;
-	int					die_to_time;
-	int					eat_to_time;
-	int					sleep_to_time;
-	int					thing_to_time;
-	int					num_meals;
+	long				die_to_time;
+	long				eat_to_time;
+	long				sleep_to_time;
+	long				num_meals;
 	int					cont_eat;
-	int					n_philo;
+	int					is_dead;
 }						t_table;
 
 typedef struct s_philo
@@ -81,7 +81,7 @@ void					free_threads(t_table *t);
 /* utils_philo.c */
 void					ft_error_help(char *str);
 void					ft_error(char *str);
-int						ft_atoi(const char *str);
+long					ft_atol(const char *str);
 int						ft_isdigit(int c);
 long					ft_usleep(int time, t_table *t);
 

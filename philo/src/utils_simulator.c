@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 22:13:47 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:16:33 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*controller(void *args)
 
 	t = (t_table *)args;
 	i = 0;
-	//while (t->is_dead != 1)
+	// while (t->is_dead != 1)
 	while (1)
 	{
 		i = 0;
@@ -53,7 +53,6 @@ int	ft_dead(t_philo *p)
 	}
 	else
 		pthread_mutex_unlock(&p->t->table);
-		
 	return (0);
 }
 
@@ -66,9 +65,9 @@ int	time_to_die(t_table *t, int i)
 		pthread_mutex_lock(&t->table);
 		t->is_dead = 1;
 		pthread_mutex_unlock(&t->table);
-		printf("%ld" RED " %d died\n" RESET, time_start_prog()
-				- t->time_curr, t->arr_p[i].index);
-		//printf_action(t->arr_p[i], "died");
+		printf("%ld" RED " %d died\n" RESET, time_start_prog() - t->time_curr,
+			t->arr_p[i].index);
+		// printf_action(t->arr_p[i], "died");
 		return (1);
 	}
 	else
@@ -98,7 +97,6 @@ void	printf_action(t_philo *p, char *str)
 				- p->t->time_curr, p->index, str);
 	}
 	pthread_mutex_unlock(&p->t->table);
-		
 }
 
 void	*philo_routine(void *args)
@@ -109,16 +107,15 @@ void	*philo_routine(void *args)
 	if (p->index % 2 == 0)
 	{
 		ft_usleep(1, p->t);
-		printf_action(p, "is thinking");
+		//printf_action(p, "is thinking");
 	}
 	while (1)
 	{
-		/* if (ft_dead(p))
-			break ; */
 		pthread_mutex_lock(&p->t->table);
 		if (p->t->is_dead != 1)
 		{
 			pthread_mutex_unlock(&p->t->table);
+			printf_action(p, "is thinking");
 			taken_fork(p);
 			if (p->t->n_philo == 1)
 				return (NULL);
@@ -126,12 +123,11 @@ void	*philo_routine(void *args)
 			if (ft_num_meals(p))
 				return (NULL);
 			ft_sleep(p);
-			printf_action(p, "is thinking");
 		}
 		else
 		{
 			pthread_mutex_unlock(&p->t->table);
-			break;
+			break ;
 		}
 	}
 	return (NULL);

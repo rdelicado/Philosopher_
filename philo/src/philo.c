@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 19:50:11 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:09:16 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,26 @@ void	checker_argv(t_table *t, char **av)
 
 void	init_args(t_table *t, char **av)
 {
-	t->n_philo = ft_atoi(av[1]);
-	t->die_to_time = ft_atoi(av[2]);
-	t->eat_to_time = ft_atoi(av[3]);
-	t->sleep_to_time = ft_atoi(av[4]);
+	t->n_philo = ft_atol(av[1]);
+	t->die_to_time = ft_atol(av[2]);
+	t->eat_to_time = ft_atol(av[3]);
+	t->sleep_to_time = ft_atol(av[4]);
 	if (av[5] == NULL)
 		t->num_meals = -1;
 	else
-		t->num_meals = ft_atoi(av[5]);
-	if (av[5] != NULL)
-		t->thing_to_time = ft_atoi(av[5]);
-	if (t->n_philo < 1 || t->n_philo > 200 || t->die_to_time < 1
-		|| t->eat_to_time < 1 || t->sleep_to_time < 1 || t->num_meals > 1)
+	{
+		t->num_meals = ft_atol(av[5]);
+		if (t->num_meals > INT_MAX)
+			ft_error_help("numero excedido del INT_MAX");
+		else if (t->num_meals < 1)
+			ft_error_help("The argument must be greater than 1");
+	}
+	if (t->n_philo < 1 || t->die_to_time < 1 || t->eat_to_time < 1
+		|| t->sleep_to_time < 1)
 		ft_error_help("The argument must be greater than 1");
+	if (t->n_philo > INT_MAX || t->die_to_time > INT_MAX
+		|| t->eat_to_time > INT_MAX || t->sleep_to_time > INT_MAX)
+		ft_error_help("numero excedido del INT_MAX");
 }
 
 long	time_start_prog(void)
