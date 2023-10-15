@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 18:53:53 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:18:59 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	*controller(void *args)
 		i = 0;
 		while (i < t->n_philo)
 		{
+			if (ft_dead(&t->arr_p[i]))
+				return (NULL);
 			pthread_mutex_lock(&t->table);
 			if (t->n_philo == t->cont_eat)
 			{
@@ -61,11 +63,12 @@ int	time_to_die(t_table *t, int i)
 	if (time_start_prog() - t->arr_p[i].last_eat > t->die_to_time)
 	{
 		pthread_mutex_unlock(&t->table);
-		printf("%ld" RED " %d died\n" RESET, time_start_prog()
-				- t->time_curr, t->arr_p[i].index);
 		pthread_mutex_lock(&t->table);
 		t->is_dead = 1;
 		pthread_mutex_unlock(&t->table);
+		printf("%ld" RED " %d died\n" RESET, time_start_prog()
+				- t->time_curr, t->arr_p[i].index);
+		//printf_action(t->arr_p[i], "died");
 		return (1);
 	}
 	else
@@ -75,9 +78,10 @@ int	time_to_die(t_table *t, int i)
 
 void	printf_action(t_philo *p, char *str)
 {
-	pthread_mutex_lock(&p->t->table);
 	if (p->t->is_dead != 1)
+	//if (!ft_dead(p))
 	{
+		pthread_mutex_lock(&p->t->table);
 		if (ft_strcmp(str, "died") == 0)
 			printf("%ld" RED " %d %s\n" RESET, time_start_prog()
 				- p->t->time_curr, p->index, str);
