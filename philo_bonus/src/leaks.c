@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 08:52:33 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/13 13:51:12 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 11:43:16 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,19 @@ void	leaks(void)
 
 void	init_data_table(t_table *t)
 {
+	t->sem = NULL;
+	t->forks = NULL;
+	t->child_pids = NULL;
+	t->arr_p = NULL;
 	t->die_to_time = -1;
 	t->eat_to_time = -1;
 	t->sleep_to_time = -1;
 	t->thing_to_time = -1;
 	t->n_philo = -1;
 	t->is_dead = 0;
-	t->time_curr = -1;
 	t->time_init = -1;
 	t->cont_eat = 0;
 	t->pid = -1;
-	t->child_pids = NULL;
 }
 
 void	init_data_philos(t_philo *p, t_table *t)

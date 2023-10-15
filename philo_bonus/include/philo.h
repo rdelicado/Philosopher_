@@ -6,15 +6,18 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/14 14:02:23 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 11:43:10 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <fcntl.h>
 # include <pthread.h>
 # include <semaphore.h>
+# include <signal.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -22,8 +25,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <signal.h>
-# include <fcntl.h>
 
 // Definiciones de colores
 # define RESET "\x1B[0m"
@@ -42,10 +43,11 @@ typedef struct s_philo	t_philo;
 typedef struct s_table
 {
 	sem_t				*sem;
+	sem_t				*forks;
 	pid_t				*child_pids;
 	pid_t				pid;
+	t_philo				*arr_p;
 	long				time_init;
-	long				time_curr;
 	int					is_dead;
 	int					die_to_time;
 	int					eat_to_time;
@@ -59,11 +61,11 @@ typedef struct s_table
 typedef struct s_philo
 {
 	t_table				*t;
+	pid_t				pid;
 	long				last_eat;
-	long				time_init;
+	// long				time_init;
 	int					index;
 	int					meals;
-	int					pid;
 }						t_philo;
 
 /* leaks.c */
@@ -78,26 +80,30 @@ void					init_args(t_table *t, char **av);
 long					time_start_prog(void);
 int						main(int ac, char **av);
 
-
 /* utils_philo.c */
 void					ft_error_help(char *str);
 void					ft_error(char *str);
 int						ft_atoi(const char *str);
 int						ft_isdigit(int c);
-long					ft_usleep(int time);
-
-/* create_processes.c */
-void					set_philos(t_table *t, t_philo *p);
-void					routine_philos(t_philo *p);
-void					printf_action(t_philo *p, char *str);
-void					routine_table(t_table *t);
+long					ft_usleep(int time, t_table *t);
 
 /* utils_semaphores.c */
+void					set_philos(t_table *t, t_philo *p);
 void					init_semaphores(t_table *t);
-void					preclean();
+void					preclean(t_table *t);
 void					clean(t_table *t);
 
-/* utils_rutine */
+/* simulator.c */
+void					routine_table(t_table *t);
+void					routine_philos(t_philo *p);
+int						time_to_die(t_table *t, int i);
+int						ft_died(t_philo *p);
+void					printf_action(t_philo *p, char *str);
 
+/* utils_rutine */
+void					taken_fork(t_philo *p);
+void					ft_eat(t_philo *p);
+void					ft_sleep(t_philo *p);
+int						ft_num_meals(t_philo *p);
 
 #endif
