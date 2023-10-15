@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/10 19:42:35 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 19:05:02 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	init_args(t_table *t, char **av)
 	if (av[5] != NULL)
 		t->thing_to_time = ft_atoi(av[5]);
 	if (t->n_philo < 1 || t->n_philo > 200 || t->die_to_time < 1
-		|| t->eat_to_time < 1 || t->sleep_to_time < 1)
+		|| t->eat_to_time < 1 || t->sleep_to_time < 1 || t->num_meals < 1)
 		ft_error_help("The argument must be greater than 1");
 }
 

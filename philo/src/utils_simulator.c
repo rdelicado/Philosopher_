@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/12 13:11:41 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:53:53 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,12 @@ void	*philo_routine(void *args)
 
 	p = (t_philo *)args;
 	if (p->index % 2 == 0)
+	{
 		ft_usleep(1, p->t);
+		printf_action(p, "is thinking");
+	}
 	while (1)
 	{
-		printf_action(p, "is thinking");
 		if (ft_dead(p))
 			break ;
 		taken_fork(p);
@@ -116,6 +118,7 @@ void	*philo_routine(void *args)
 		if (ft_num_meals(p))
 			return (NULL);
 		ft_sleep(p);
+		printf_action(p, "is thinking");
 	}
 	return (NULL);
 }
