@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/16 10:08:32 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:12:00 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,24 @@ void	*controller(void *args)
 
 	t = (t_table *)args;
 	i = 0;
-	// while (t->is_dead != 1)
-	while (1)
+	while (i < t->n_philo)
 	{
-		i = 0;
-		while (i < t->n_philo)
+		if (ft_dead(&t->arr_p[i]))
+			return (NULL);
+		pthread_mutex_lock(&t->table);
+		if (t->num_meals == t->cont_eat)
 		{
-			if (ft_dead(&t->arr_p[i]))
-				return (NULL);
-			pthread_mutex_lock(&t->table);
-			if (t->n_philo == t->cont_eat)
-			{
-				pthread_mutex_unlock(&t->table);
-				return (NULL);
-			}
-			else
-				pthread_mutex_unlock(&t->table);
-			if (time_to_die(t, i))
-				return (NULL);
-			i++;
+			printf("cont eat: %d\n", t->cont_eat);
+			pthread_mutex_unlock(&t->table);
+			break;
 		}
+		else
+			pthread_mutex_unlock(&t->table);
+		if (time_to_die(t, i))
+			break;
+		i++;
+		if (i == t->n_philo)
+			i = 0;
 	}
 	return (NULL);
 }
@@ -57,6 +55,8 @@ void	*philo_routine(void *args)
 		{
 			pthread_mutex_unlock(&p->t->table);
 			ft_simulator(p);
+			if (p->t->n_philo == 1)
+				break ;
 		}
 		else
 		{

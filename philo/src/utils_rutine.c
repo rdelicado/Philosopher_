@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/16 11:17:52 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:08:34 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	taken_fork(t_philo *p)
 
 void	ft_eat(t_philo *p)
 {
-	printf_action(p, "is eating");
 	pthread_mutex_lock(&p->t->table);
 	p->last_eat = time_start_prog();
 	pthread_mutex_unlock(&p->t->table);
+	printf_action(p, "is eating");
 	ft_usleep(p->t->eat_to_time, p->t);
 	pthread_mutex_lock(&p->t->table);
 	p->meals++;
@@ -54,6 +54,7 @@ int	ft_num_meals(t_philo *p)
 	{
 		pthread_mutex_lock(&p->t->table);
 		p->t->cont_eat++;
+		printf("cont eat: %d\n", p->t->cont_eat);
 		pthread_mutex_unlock(&p->t->table);
 		return (1);
 	}
@@ -66,8 +67,11 @@ void	ft_simulator(t_philo *p)
 	if (p->t->n_philo == 1)
 		return ;
 	ft_eat(p);
-	if (ft_num_meals(p))
-		return ;
+	pthread_mutex_lock(&p->t->table);
+	p->t->cont_eat++;
+	pthread_mutex_unlock(&p->t->table);
+	/* if (ft_num_meals(p))
+		return ; */
 	ft_sleep(p);
 	printf_action(p, "is thinking");
 }
