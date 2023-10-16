@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 23:09:19 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:17:52 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,16 @@ int	ft_num_meals(t_philo *p)
 		return (1);
 	}
 	return (0);
+}
+
+void	ft_simulator(t_philo *p)
+{
+	taken_fork(p);
+	if (p->t->n_philo == 1)
+		return ;
+	ft_eat(p);
+	if (ft_num_meals(p))
+		return ;
+	ft_sleep(p);
+	printf_action(p, "is thinking");
 }

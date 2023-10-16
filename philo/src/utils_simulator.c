@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 23:16:33 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:08:32 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,30 @@ void	*controller(void *args)
 	return (NULL);
 }
 
+void	*philo_routine(void *args)
+{
+	t_philo	*p;
+
+	p = (t_philo *)args;
+	if (p->index % 2 == 0)
+		ft_usleep(1, p->t);
+	while (1)
+	{
+		pthread_mutex_lock(&p->t->table);
+		if (p->t->is_dead != 1)
+		{
+			pthread_mutex_unlock(&p->t->table);
+			ft_simulator(p);
+		}
+		else
+		{
+			pthread_mutex_unlock(&p->t->table);
+			break ;
+		}
+	}
+	return (NULL);
+}
+
 int	ft_dead(t_philo *p)
 {
 	pthread_mutex_lock(&p->t->table);
@@ -67,7 +91,6 @@ int	time_to_die(t_table *t, int i)
 		pthread_mutex_unlock(&t->table);
 		printf("%ld" RED " %d died\n" RESET, time_start_prog() - t->time_curr,
 			t->arr_p[i].index);
-		// printf_action(t->arr_p[i], "died");
 		return (1);
 	}
 	else
@@ -97,38 +120,4 @@ void	printf_action(t_philo *p, char *str)
 				- p->t->time_curr, p->index, str);
 	}
 	pthread_mutex_unlock(&p->t->table);
-}
-
-void	*philo_routine(void *args)
-{
-	t_philo	*p;
-
-	p = (t_philo *)args;
-	if (p->index % 2 == 0)
-	{
-		ft_usleep(1, p->t);
-		//printf_action(p, "is thinking");
-	}
-	while (1)
-	{
-		pthread_mutex_lock(&p->t->table);
-		if (p->t->is_dead != 1)
-		{
-			pthread_mutex_unlock(&p->t->table);
-			printf_action(p, "is thinking");
-			taken_fork(p);
-			if (p->t->n_philo == 1)
-				return (NULL);
-			ft_eat(p);
-			if (ft_num_meals(p))
-				return (NULL);
-			ft_sleep(p);
-		}
-		else
-		{
-			pthread_mutex_unlock(&p->t->table);
-			break ;
-		}
-	}
-	return (NULL);
 }
