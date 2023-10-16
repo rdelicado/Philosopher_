@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 14:42:30 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:01:42 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	clean(t_table *t)
 
 void	init_semaphores(t_table *t)
 {
-	t->forks = sem_open("/forks", O_CREAT | O_EXCL | O_RDWR , 0666, t->n_philo / 2);
+	t->forks = sem_open("/forks", O_CREAT | O_EXCL | O_RDWR , 0666, t->n_philo);
 	if (t->forks == SEM_FAILED)
 		ft_error("No se pudo crear el semaforo de forks");
 	t->sem = sem_open("/control", O_CREAT | O_EXCL | O_RDWR , 0666, 1);

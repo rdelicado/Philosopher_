@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/14 15:07:04 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:19:36 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ long	ft_usleep(int time, t_table *t)
 			sem_post(t->sem);
 			break;
 		}
-		sem_post(t->sem);
+		else
+			sem_post(t->sem);
 		if (gettimeofday(&init, NULL) < 0)
 			ft_error("no time");
 		time_finish = (init.tv_sec * 1000) + (init.tv_usec / 1000);

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 14:43:21 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:51:06 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,22 @@ void	routine_table(t_table *t)
 
 void	routine_philos(t_philo *p)
 {
+	if (p->index % 2 == 0)
+		ft_usleep(1, p->t);
 	while (1)
 	{
-		printf_action(p, "is thinking");
-		if (ft_died(p))
-			break ;
-		taken_fork(p);
-		if (p->t->n_philo == 1)
-			break ;
-		ft_eat(p);
-		if (ft_num_meals(p))
-			break ;
-		ft_sleep(p);
+		sem_wait(p->t->sem);
+		if (p->t->is_dead != 1)
+		{
+			sem_post(p->t->sem);
+			ft_simulator(p);
+		}
+		else
+		{
+			sem_post(p->t->sem);
+			break;
+		}
 	}
-	//exit(EXIT_SUCCESS);
-	clean(p->t);
 }
 
 int	ft_died(t_philo *p)
@@ -92,13 +93,15 @@ int	time_to_die(t_table *t, int i)
 	sem_wait(t->sem);
 	if (time_start_prog() - t->arr_p[i].last_eat > t->die_to_time)
 	{
+		printf("(funcion time_to_die) time ultima comida philo %d: %ld\n", t->arr_p[i].index, t->arr_p[i].last_eat);
+		//printf("tiempo actual: %ld\n", time_start_prog());
+		//printf("tiempo actual - ultima comida philo %d: %ld\n", t->arr_p[i].index, time_start_prog() - t->arr_p[i].last_eat);
 		sem_post(t->sem);
-		printf("%ld" RED " %d died\n" RESET, time_start_prog() - t->time_init,
-			t->arr_p[i].index);
-		printf("%ld %d\n", time_start_prog() - t->arr_p[i].last_eat, t->die_to_time);
 		sem_wait(t->sem);
 		t->is_dead = 1;
 		sem_post(t->sem);
+		printf("%ld" RED " %d died\n" RESET, time_start_prog() - t->time_init,
+			t->arr_p[i].index);
 		return (1);
 	}
 	else
