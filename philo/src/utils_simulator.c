@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/16 16:12:00 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:56:53 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_dead(t_philo *p)
 int	time_to_die(t_table *t, int i)
 {
 	pthread_mutex_lock(&t->table);
-	if (time_start_prog() - t->arr_p[i].last_eat > t->die_to_time)
+	if (time_start_prog() - t->arr_p[i].last_eat >= t->die_to_time)
 	{
 		pthread_mutex_unlock(&t->table);
 		pthread_mutex_lock(&t->table);
