@@ -6,13 +6,13 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/15 23:09:16 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/17 21:18:15 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	checker_argv(t_table *t, char **av)
+void	checker_argv(t_table *t, char **av, int ac)
 {
 	int	i;
 	int	j;
@@ -29,19 +29,20 @@ void	checker_argv(t_table *t, char **av)
 		}
 		i++;
 	}
-	init_args(t, av);
+	init_args(t, av, ac);
 }
 
-void	init_args(t_table *t, char **av)
+void	init_args(t_table *t, char **av, int ac)
 {
 	t->n_philo = ft_atol(av[1]);
 	t->die_to_time = ft_atol(av[2]);
 	t->eat_to_time = ft_atol(av[3]);
 	t->sleep_to_time = ft_atol(av[4]);
-	if (av[5] == NULL)
+	if (ac == 5)
 		t->num_meals = -1;
-	else
+	else if (ac == 6)
 	{
+		//printf("entra aqui\n");
 		t->num_meals = ft_atol(av[5]);
 		if (t->num_meals > INT_MAX)
 			ft_error_help("numero excedido del INT_MAX");
@@ -91,10 +92,11 @@ int	main(int ac, char **av)
 	// atexit(leaks);
 	init_data_table(&t);
 	init_data_philos(&p, &t);
-	checker_argv(&t, av);
+	checker_argv(&t, av, ac);
 	set_arr_philos(&t, &p);
 	set_arr_forks(&t);
 	init_threads(&t);
+	
 	free_threads(&t);
 	free(t.arr_p);
 	return (0);

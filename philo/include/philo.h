@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/16 15:58:27 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/17 21:15:43 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void					init_data_philos(t_philo *p, t_table *t);
 int						ft_strcmp(const char *s1, const char *s2);
 
 /* philo.c */
-void					checker_argv(t_table *t, char **av);
-void					init_args(t_table *t, char **av);
+void					checker_argv(t_table *t, char **av, int ac);
+void					init_args(t_table *t, char **av, int ac);
 long					time_start_prog(void);
 int						main(int ac, char **av);
 void					free_threads(t_table *t);
@@ -96,12 +96,18 @@ void					*philo_routine(void *args);
 void					*controller(void *args);
 void					printf_action(t_philo *p, char *str);
 int						ft_dead(t_philo *p);
-int						time_to_die(t_table *t, int i);
+int						check_is_died(t_table *t);
 
 /* utils_rutine */
 void					taken_fork(t_philo *p);
 void					ft_eat(t_philo *p);
 void					ft_sleep(t_philo *p);
-int						ft_num_meals(t_philo *p);
+void					ft_num_meals(t_philo *p);
 void					ft_simulator(t_philo *p);
+
+/* utils_extras.c */
+int						ft_exit_for_eat(t_table *t);
+void					ft_meals(t_philo *p);
+void					ft_last_eat(t_philo *p);
+
 #endif
