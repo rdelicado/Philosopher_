@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/20 17:35:01 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:39:26 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,34 +53,40 @@ void	ft_sleep(t_philo *p)
 	ft_usleep(p->t->sleep_to_time, p->t);
 }
 
-void	ft_num_meals(t_philo *p)
+int	ft_num_meals(t_philo *p)
 {
-	if (p->meals == p->t->num_meals) // un philo ya ha comido todas las vec
+	if (p->meals == p->t->argv_meals) 
 	{
 		pthread_mutex_lock(&p->t->table);
-		p->t->cont_eat++; // un philo ya ha comido
-		printf("cont eat: %d\n", p->t->cont_eat);
+		p->t->cont_eat++;
 		pthread_mutex_unlock(&p->t->table);
+		return (1);
 	}
+	return (0);
 }
 
 void	ft_simulator(t_philo *p)
 {
-	pthread_mutex_lock(&p->t->table);
-	if (p->t->is_dead != 1)
+	while (1)
 	{
-		pthread_mutex_unlock(&p->t->table);
-		taken_fork(p);
-		if (p->t->n_philo == 1)
-			return ;
-		ft_eat(p);
-		ft_num_meals(p); // si ya un philo ha comido todas las veces,
-		ft_sleep(p);
-		printf_action(p, "is thinking");
-	}
-	else
-	{
-		pthread_mutex_unlock(&p->t->table);
-		return	;
+		pthread_mutex_lock(&p->t->table);
+		if (p->t->is_dead != 1)
+		{
+			pthread_mutex_unlock(&p->t->table);
+			taken_fork(p);
+			if (p->t->n_philo == 1)
+				break;
+			if (!ft_num_meals(p))
+				ft_eat(p);
+			else
+				break;
+			ft_sleep(p);
+			printf_action(p, "is thinking");
+		}
+		else
+		{
+			pthread_mutex_unlock(&p->t->table);
+			break;
+		}
 	}
 }

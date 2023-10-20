@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/17 21:15:43 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:01:51 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_table
 	long				die_to_time;
 	long				eat_to_time;
 	long				sleep_to_time;
-	long				num_meals;
+	long				argv_meals;
 	int					cont_eat;
 	int					is_dead;
 }						t_table;
@@ -102,7 +102,7 @@ int						check_is_died(t_table *t);
 void					taken_fork(t_philo *p);
 void					ft_eat(t_philo *p);
 void					ft_sleep(t_philo *p);
-void					ft_num_meals(t_philo *p);
+int						ft_num_meals(t_philo *p);
 void					ft_simulator(t_philo *p);
 
 /* utils_extras.c */

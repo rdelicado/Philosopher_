@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/20 17:03:28 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:02:23 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	init_args(t_table *t, char **av, int ac)
 	t->eat_to_time = ft_atol(av[3]);
 	t->sleep_to_time = ft_atol(av[4]);
 	if (ac == 5)
-		t->num_meals = -1;
+		t->argv_meals = -1;
 	else if (ac == 6)
 	{
 		//printf("entra aqui\n");
-		t->num_meals = ft_atol(av[5]);
-		if (t->num_meals > INT_MAX)
+		t->argv_meals = ft_atol(av[5]);
+		if (t->argv_meals > INT_MAX)
 			ft_error_help("numero excedido del INT_MAX");
-		else if (t->num_meals < 1)
+		else if (t->argv_meals < 1)
 			ft_error_help("The argument must be greater than 1");
 	}
 	if (t->n_philo < 1 || t->die_to_time < 1 || t->eat_to_time < 1
