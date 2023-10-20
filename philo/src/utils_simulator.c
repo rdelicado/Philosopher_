@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/17 21:05:37 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:02:38 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	*controller(void *args)
 	t = (t_table *)args;
 	while (1)
 	{
-		if (ft_exit_for_eat(t))
-			break;
+		/* if (ft_exit_for_eat(t))
+			break; */
 		if (check_is_died(t))
 			break;
 	}
@@ -36,19 +36,11 @@ void	*philo_routine(void *args)
 		ft_usleep(1, p->t); // no ft_usleep
 	while (1)
 	{
-		pthread_mutex_lock(&p->t->table);
-		if (p->t->is_dead != 1)
-		{
-			pthread_mutex_unlock(&p->t->table);
-			ft_simulator(p);
-			if (p->t->n_philo == 1)
-				break ;
-		}
-		else
-		{
-			pthread_mutex_unlock(&p->t->table);
+		ft_simulator(p);
+		if (p->t->n_philo == 1)
 			break ;
-		}
+		if (ft_dead(p))
+			break;
 	}
 	return (NULL);
 }
