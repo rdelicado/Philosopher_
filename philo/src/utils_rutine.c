@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/20 18:39:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/21 12:11:39 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,8 @@ void	ft_simulator(t_philo *p)
 			taken_fork(p);
 			if (p->t->n_philo == 1)
 				break;
-			if (!ft_num_meals(p))
-				ft_eat(p);
-			else
+			ft_eat(p);
+			if (ft_num_meals(p))
 				break;
 			ft_sleep(p);
 			printf_action(p, "is thinking");
