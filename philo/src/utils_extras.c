@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:13:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/20 18:39:09 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:10:00 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ void	ft_meals(t_philo *p)
 {
 	pthread_mutex_lock(&p->t->table);
 	p->meals++;
-	//printf("eat: %d\n", p->meals);
 	pthread_mutex_unlock(&p->t->table);
 }
 
 int	ft_exit_for_eat(t_table *t)
 {
-
 	if (t->argv_meals == -1)
 		return (0);
 	pthread_mutex_lock(&t->table);
@@ -42,5 +40,3 @@ int	ft_exit_for_eat(t_table *t)
 		pthread_mutex_unlock(&t->table);
 	return (0);
 }
-
-

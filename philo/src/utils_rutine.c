@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/21 12:11:39 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:10:07 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	ft_eat(t_philo *p)
 	{
 		pthread_mutex_unlock(&*p->r_fork);
 		pthread_mutex_unlock(&p->l_fork);
-		
 	}
 }
 
@@ -55,7 +54,7 @@ void	ft_sleep(t_philo *p)
 
 int	ft_num_meals(t_philo *p)
 {
-	if (p->meals == p->t->argv_meals) 
+	if (p->meals == p->t->argv_meals)
 	{
 		pthread_mutex_lock(&p->t->table);
 		p->t->cont_eat++;
@@ -75,17 +74,17 @@ void	ft_simulator(t_philo *p)
 			pthread_mutex_unlock(&p->t->table);
 			taken_fork(p);
 			if (p->t->n_philo == 1)
-				break;
+				break ;
 			ft_eat(p);
 			if (ft_num_meals(p))
-				break;
+				break ;
 			ft_sleep(p);
 			printf_action(p, "is thinking");
 		}
 		else
 		{
 			pthread_mutex_unlock(&p->t->table);
-			break;
+			break ;
 		}
 	}
 }
