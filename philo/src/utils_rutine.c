@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/21 17:10:07 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/21 19:41:59 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ int	ft_num_meals(t_philo *p)
 		pthread_mutex_lock(&p->t->table);
 		p->t->cont_eat++;
 		pthread_mutex_unlock(&p->t->table);
+		pthread_mutex_lock(&p->t->table);
+		p->meals++;
+		pthread_mutex_unlock(&p->t->table);
+		pthread_mutex_unlock(&p->t->table);
 		return (1);
 	}
 	return (0);
@@ -68,13 +72,13 @@ void	ft_simulator(t_philo *p)
 {
 	while (1)
 	{
+		taken_fork(p);
+		if (p->t->n_philo == 1)
+			break ;
 		pthread_mutex_lock(&p->t->table);
 		if (p->t->is_dead != 1)
 		{
 			pthread_mutex_unlock(&p->t->table);
-			taken_fork(p);
-			if (p->t->n_philo == 1)
-				break ;
 			ft_eat(p);
 			if (ft_num_meals(p))
 				break ;

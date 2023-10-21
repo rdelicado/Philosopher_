@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/21 17:10:31 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/21 19:44:58 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	*controller(void *args)
 	while (1)
 	{
 		if (ft_exit_for_eat(t))
-			break ;
+			return (NULL);
 		if (check_is_died(t))
-			break ;
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -37,9 +37,12 @@ void	*philo_routine(void *args)
 	ft_simulator(p);
 	if (p->t->n_philo == 1)
 		return (NULL);
-	if (ft_num_meals(p))
+	else if (ft_num_meals(p))
+	{
+		//printf("philo %d\n", p->index);
 		return (NULL);
-	if (ft_dead(p))
+	}
+	else if (ft_dead(p))
 		return (NULL);
 	return (NULL);
 }
