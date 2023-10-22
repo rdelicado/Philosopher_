@@ -6,7 +6,7 @@
 #    By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/18 19:17:24 by rdelicad          #+#    #+#              #
-#    Updated: 2023/10/21 19:46:37 by rdelicad         ###   ########.fr        #
+#    Updated: 2023/10/22 12:13:52 by rdelicad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ NAME      := philo
 
 CC        := gcc
 
-CFLAGS    := -Wall -Wextra -Werror -pthread -fsanitize=thread 
+CFLAGS    := -Wall -Wextra -Werror -pthread #-fsanitize=thread 
 
 # --- Library ---
 
@@ -52,11 +52,14 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)$(BOLD)Done.$(RESET)"
 
 
-$(OBJS) : obj/%.o: src/%.c
+$(OBJS) : obj/%.o: src/%.c | create_dir
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 
 all: $(NAME)
+
+create_dir:
+	@mkdir -p obj
 
 clean:
 	@echo "$(RED)$(BOLD)Cleaning objects from program...$(RESET)"

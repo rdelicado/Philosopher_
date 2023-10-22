@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/21 19:44:58 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/22 12:00:44 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ void	*philo_routine(void *args)
 	if (p->t->n_philo == 1)
 		return (NULL);
 	else if (ft_num_meals(p))
-	{
-		//printf("philo %d\n", p->index);
 		return (NULL);
-	}
 	else if (ft_dead(p))
 		return (NULL);
 	return (NULL);
@@ -68,7 +65,8 @@ int	check_is_died(t_table *t)
 	while (i < t->n_philo)
 	{
 		pthread_mutex_lock(&t->table);
-		if (time_start_prog() - t->arr_p[i].last_eat >= t->die_to_time)
+		if (time_start_prog() - t->arr_p[i].last_eat >= t->die_to_time
+			&& t->has_eaten == 0)
 		{
 			pthread_mutex_unlock(&t->table);
 			pthread_mutex_lock(&t->table);

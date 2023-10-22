@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/21 19:26:31 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/22 12:08:34 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <limits.h>
 # include <pthread.h>
 # include <semaphore.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -52,6 +53,7 @@ typedef struct s_table
 	long				argv_meals;
 	int					cont_eat;
 	int					is_dead;
+	int					has_eaten;
 }						t_table;
 
 typedef struct s_philo

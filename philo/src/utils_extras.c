@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:13:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/21 19:37:51 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/10/22 12:05:47 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_exit_for_eat(t_table *t)
 	pthread_mutex_lock(&t->table);
 	if (t->cont_eat == t->n_philo)
 	{
-		//printf("entra aqui\n");
 		pthread_mutex_unlock(&t->table);
 		return (1);
 	}
