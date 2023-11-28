@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/16 10:51:06 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/11/28 21:02:41 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,65 +14,27 @@
 
 void	routine_table(t_table *t)
 {
-	bool	all_rt;
-	bool	death_occurred;
-	int		i;
-
-	death_occurred = false;
-	all_rt = false;
-	i = 0;
-	while (!(all_rt || death_occurred))
+	while (1)
 	{
-		i = 0;
-		while (i < t->n_philo)
-		{
-			sem_wait(t->sem);
-			if (t->n_philo == t->cont_eat)
-			{
-				sem_post(t->sem);
-				all_rt = true;
-				clean(t);
-				//break ;
-			}
-			else
-				sem_post(t->sem);
-			if (time_to_die(t, i))
-			{
-				death_occurred = true;
-				clean(t);
-				//break ;
-			}
-			i++;
-		}
-		/* if (all_rt || death_occurred)
-		{
-			while (waitpid(-1, NULL, 0) > 0)
-				; 
+		if (ft_exit_for_eat(t))
 			break ;
-		} */
+		if (time_to_die(t))
+			break ;	
 	}
-	//exit(EXIT_SUCCESS);
-	//clean(t);
 }
 
 void	routine_philos(t_philo *p)
 {
 	if (p->index % 2 == 0)
 		ft_usleep(1, p->t);
-	while (1)
-	{
-		sem_wait(p->t->sem);
-		if (p->t->is_dead != 1)
-		{
-			sem_post(p->t->sem);
-			ft_simulator(p);
-		}
-		else
-		{
-			sem_post(p->t->sem);
-			break;
-		}
-	}
+	ft_simulator(p);
+	if (p->t->n_philo == 1)
+		return ;
+	else if (ft_num_meals(p))
+		return ;
+	else if (ft_died(p))
+		return ;
+	return ;
 }
 
 int	ft_died(t_philo *p)
@@ -88,24 +50,31 @@ int	ft_died(t_philo *p)
 	return (0);
 }
 
-int	time_to_die(t_table *t, int i)
+int	time_to_die(t_table *t)
 {
-	sem_wait(t->sem);
-	if (time_start_prog() - t->arr_p[i].last_eat > t->die_to_time)
+	int	i;
+
+	i = 0;
+	while (i < t->n_philo)
 	{
-		printf("(funcion time_to_die) time ultima comida philo %d: %ld\n", t->arr_p[i].index, t->arr_p[i].last_eat);
-		//printf("tiempo actual: %ld\n", time_start_prog());
-		//printf("tiempo actual - ultima comida philo %d: %ld\n", t->arr_p[i].index, time_start_prog() - t->arr_p[i].last_eat);
-		sem_post(t->sem);
 		sem_wait(t->sem);
-		t->is_dead = 1;
-		sem_post(t->sem);
-		printf("%ld" RED " %d died\n" RESET, time_start_prog() - t->time_init,
-			t->arr_p[i].index);
-		return (1);
+		if (time_start_prog() - t->arr_p[i].last_eat >= t->die_to_time
+			&& t->has_eaten == 0)
+		{
+			sem_post(t->sem);
+			sem_wait(t->sem);
+			t->is_dead = 1;
+			sem_post(t->sem);
+			sem_wait(t->sem);
+			printf("%ld" RED " %d died\n" RESET, time_start_prog() - t->time_init,
+				t->arr_p[i].index);
+			sem_post(t->sem);
+			return (1);
+		}
+		else
+			sem_post(t->sem);
+		i++;
 	}
-	else
-		sem_post(t->sem);
 	return (0);
 }
 

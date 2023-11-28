@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/16 10:17:14 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/11/28 20:59:16 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,16 @@ typedef struct s_table
 	pid_t				*child_pids;
 	pid_t				pid;
 	t_philo				*arr_p;
+	int					n_philo;
 	long				time_init;
-	int					is_dead;
 	int					die_to_time;
 	int					eat_to_time;
-	int					sleep_to_time;
 	int					thing_to_time;
+	int					sleep_to_time;
 	int					num_meals;
 	int					cont_eat;
-	int					n_philo;
+	int					is_dead;
+	int					has_eaten;
 }						t_table;
 
 typedef struct s_philo
@@ -96,7 +97,7 @@ void					clean(t_table *t);
 /* simulator.c */
 void					routine_table(t_table *t);
 void					routine_philos(t_philo *p);
-int						time_to_die(t_table *t, int i);
+int						time_to_die(t_table *t);
 int						ft_died(t_philo *p);
 void					printf_action(t_philo *p, char *str);
 
@@ -106,5 +107,10 @@ void					ft_eat(t_philo *p);
 void					ft_sleep(t_philo *p);
 int						ft_num_meals(t_philo *p);
 void					ft_simulator(t_philo *p);
+
+/* utils_extras.c */
+void					ft_last_eat(t_philo *p);
+void					ft_meals(t_philo *p);
+int						ft_exit_for_eat(t_table *t);
 
 #endif

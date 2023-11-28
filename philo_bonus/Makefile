@@ -6,7 +6,7 @@
 #    By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/18 19:17:24 by rdelicad          #+#    #+#              #
-#    Updated: 2023/10/14 19:19:47 by rdelicad         ###   ########.fr        #
+#    Updated: 2023/11/28 21:01:28 by rdelicad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ NAME      := philo_bonus
 
 CC        := gcc
 
-CFLAGS    := -g -Wall -Wextra -Werror -pthread -fsanitize=thread
+CFLAGS    := -g -Wall -Wextra -Werror -pthread #-fsanitize=thread
 
 # --- Library ---
 
@@ -38,7 +38,7 @@ CFLAGS    := -g -Wall -Wextra -Werror -pthread -fsanitize=thread
 # --- Files ---
 
 SRCS      := leaks.c philo.c utils_philo.c utils_semaphores.c\
-			utils_rutine.c simulator.c 
+			utils_rutine.c simulator.c utils_extras.c
 
 OBJS = $(addprefix obj/,$(SRCS:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/16 10:40:41 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/11/28 20:21:26 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,20 @@ void	taken_fork(t_philo *p)
 
 void	ft_eat(t_philo *p)
 {
-	sem_wait(p->t->sem);
-	p->last_eat = time_start_prog();
-	printf("(funcion eat) time philo %d: %ld\n", p->index, p->last_eat);
-	sem_post(p->t->sem);
-	printf_action(p, "is eating");
-	ft_usleep(p->t->eat_to_time, p->t);
-	sem_wait(p->t->sem);
-	p->meals++;
-	sem_post(p->t->sem);
-	sem_post(p->t->forks);
-	sem_post(p->t->forks);
+	if (!ft_died(p))
+	{
+		ft_last_eat(p);
+		ft_meals(p);
+		printf_action(p, "is eating");
+		ft_usleep(p->t->eat_to_time, p->t);
+		sem_post(p->t->forks);
+		sem_post(p->t->forks);
+	}
+	else
+	{
+		sem_post(p->t->forks);
+		sem_post(p->t->forks);
+	}
 }
 
 void	ft_sleep(t_philo *p)
@@ -56,6 +59,10 @@ int	ft_num_meals(t_philo *p)
 		sem_wait(p->t->sem);
 		p->t->cont_eat++;
 		sem_post(p->t->sem);
+		sem_wait(p->t->forks);
+		p->meals++;
+		p->t->has_eaten = 1;
+		sem_post(p->t->sem);
 		return (1);
 	}
 	return (0);
@@ -63,12 +70,26 @@ int	ft_num_meals(t_philo *p)
 
 void	ft_simulator(t_philo *p)
 {
-	printf_action(p, "is thinking");
-	taken_fork(p);
-	if (p->t->n_philo == 1)
-		return ;
-	ft_eat(p);
-	if (ft_num_meals(p))
-		return ;
-	ft_sleep(p);
+	while (p->t->is_dead != 1)
+	{
+		if (ft_died(p))
+			break ;
+		taken_fork(p);
+		if (p->t->n_philo == 1)
+			break ;
+		if (ft_died(p))
+		{
+			sem_post(p->t->forks);
+			break ;
+		}
+		ft_eat(p);
+		if (ft_num_meals(p))
+			break ;
+		if (ft_died(p))
+			break ;
+		ft_sleep(p);
+		if (ft_died(p))
+			break ;
+		printf_action(p, "is thinking");
+	}
 }
