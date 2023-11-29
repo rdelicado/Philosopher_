@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:54:28 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/11/28 21:02:41 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/11/30 00:07:28 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,36 @@ void	routine_philos(t_philo *p)
 
 int	ft_died(t_philo *p)
 {
+	/* int sval;
+	sem_getvalue(p->t->sem, &sval);
 	sem_wait(p->t->sem);
+	printf("wait: %d\n", sval);
 	if (p->t->is_dead == 1)
 	{
+		printf("entra aqui\n");
+		
+		sem_getvalue(p->t->sem, &sval);
 		sem_post(p->t->sem);
+		printf("post: %d\n", sval);
 		return (1);
 	}
-	else
-		sem_post(p->t->sem);
+	sem_getvalue(p->t->sem, &sval);
+	sem_post(p->t->sem);
+	printf("else: %d\n", sval); */
+	//int sval;
+	int is_dead_local;
+
+	sem_wait(p->t->sem);
+	is_dead_local = p->t->is_dead;
+	sem_post(p->t->sem);
+
+	if (is_dead_local == 1)
+	{
+		printf("entra aqui\n");
+		return (1);
+	}
+	//printf("else: %d\n", sval);
+	return (0);
 	return (0);
 }
 
@@ -61,6 +83,7 @@ int	time_to_die(t_table *t)
 		if (time_start_prog() - t->arr_p[i].last_eat >= t->die_to_time
 			&& t->has_eaten == 0)
 		{
+			printf("entra aqui\n");
 			sem_post(t->sem);
 			sem_wait(t->sem);
 			t->is_dead = 1;

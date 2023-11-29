@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/11/28 20:21:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/11/29 23:32:50 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,45 @@
 
 void	taken_fork(t_philo *p)
 {
+	//int sval;
+	//sem_getvalue(p->t->forks, &sval);
 	sem_wait(p->t->forks);
+	//printf("1: %d\n", sval);
 	printf_action(p, "has taken a fork");
-	if (p->t->n_philo != 1)
+	if (p->t->n_philo > 1)
 	{
+		//sem_getvalue(p->t->forks, &sval);
 		sem_wait(p->t->forks);
+		//printf("2: %d\n", sval);
 		printf_action(p, "has taken a fork");
 	}
 	else
 	{
 		sem_post(p->t->forks);
+		//printf("entra aqui\n");
 		return ;
 	}
 }
 
 void	ft_eat(t_philo *p)
 {
+	//int sval;
 	if (!ft_died(p))
 	{
 		ft_last_eat(p);
 		ft_meals(p);
 		printf_action(p, "is eating");
 		ft_usleep(p->t->eat_to_time, p->t);
-		sem_post(p->t->forks);
-		sem_post(p->t->forks);
 	}
-	else
-	{
-		sem_post(p->t->forks);
-		sem_post(p->t->forks);
-	}
+	//sem_getvalue(p->t->forks, &sval);
+	sem_post(p->t->forks);
+	//printf("3: %d\n", sval);
+	//sem_getvalue(p->t->forks, &sval);
+	sem_post(p->t->forks);
+	//printf("4: %d\n", sval);
+	//sem_getvalue(p->t->forks, &sval);
+	sem_post(p->t->forks);
+	//printf("4: %d\n", sval);
 }
 
 void	ft_sleep(t_philo *p)
@@ -83,10 +92,10 @@ void	ft_simulator(t_philo *p)
 			break ;
 		}
 		ft_eat(p);
-		if (ft_num_meals(p))
+		//printf("1 entra aqui\n");
+		if (ft_num_meals(p) || ft_died(p))
 			break ;
-		if (ft_died(p))
-			break ;
+		//printf("2 entra aqui\n");
 		ft_sleep(p);
 		if (ft_died(p))
 			break ;
