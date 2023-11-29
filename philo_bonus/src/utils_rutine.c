@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 09:06:58 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/11/28 20:21:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/11/29 20:06:59 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	taken_fork(t_philo *p)
 	printf_action(p, "has taken a fork");
 	if (p->t->n_philo != 1)
 	{
-		sem_wait(p->t->forks);
+		sem_post(p->t->forks);
 		printf_action(p, "has taken a fork");
 	}
 	else
