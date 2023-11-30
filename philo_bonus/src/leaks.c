@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 08:52:33 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/11/28 20:03:47 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/11/30 20:33:33 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_data_table(t_table *t)
 {
 	t->sem = NULL;
 	t->forks = NULL;
+	t->sem_meals_eaten = NULL;
 	t->child_pids = NULL;
 	t->arr_p = NULL;
 	t->die_to_time = -1;

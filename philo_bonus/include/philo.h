@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/11/28 20:59:16 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/11/30 20:43:30 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_table
 {
 	sem_t				*sem;
 	sem_t				*forks;
+	sem_t				*sem_meals_eaten;
 	pid_t				*child_pids;
 	pid_t				pid;
 	t_philo				*arr_p;
@@ -111,6 +112,7 @@ void					ft_simulator(t_philo *p);
 /* utils_extras.c */
 void					ft_last_eat(t_philo *p);
 void					ft_meals(t_philo *p);
-int						ft_exit_for_eat(t_table *t);
+void						ft_exit_for_eat(t_table *t);
+void					create_fork(t_table *t, t_philo *p);
 
 #endif
