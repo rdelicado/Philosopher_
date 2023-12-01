@@ -6,13 +6,13 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:22:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/14 18:11:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:52:18 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	checker_argv(t_table *t, char **av)
+void	checker_argv(t_table *t, char **av, int ac)
 {
 	int	i;
 	int	j;
@@ -29,24 +29,31 @@ void	checker_argv(t_table *t, char **av)
 		}
 		i++;
 	}
-	init_args(t, av);
+	init_args(t, av, ac);
 }
 
-void	init_args(t_table *t, char **av)
+void	init_args(t_table *t, char **av, int ac)
 {
-	t->n_philo = ft_atoi(av[1]);
-	t->die_to_time = ft_atoi(av[2]);
-	t->eat_to_time = ft_atoi(av[3]);
-	t->sleep_to_time = ft_atoi(av[4]);
-	if (av[5] == NULL)
+	t->n_philo = ft_atol(av[1]);
+	t->die_to_time = ft_atol(av[2]);
+	t->eat_to_time = ft_atol(av[3]);
+	t->sleep_to_time = ft_atol(av[4]);
+	if (ac == 5)
 		t->num_meals = -1;
-	else
-		t->num_meals = ft_atoi(av[5]);
-	if (av[5] != NULL)
-		t->thing_to_time = ft_atoi(av[5]);
-	if (t->n_philo < 1 || t->n_philo > 200 || t->die_to_time < 1
-		|| t->eat_to_time < 1 || t->sleep_to_time < 1)
+	else if (ac == 6)
+	{
+		t->num_meals = ft_atol(av[5]);
+		if (t->num_meals > INT_MAX)
+			ft_error_help("numero excedido del INT_MAX");
+		else if (t->num_meals < 1)
+			ft_error_help("The argument must be greater than 1");
+	}
+	if (t->n_philo < 1 || t->die_to_time < 1 || t->eat_to_time < 1
+		|| t->sleep_to_time < 1)
 		ft_error_help("The argument must be greater than 1");
+	if (t->n_philo > INT_MAX || t->die_to_time > INT_MAX
+		|| t->eat_to_time > INT_MAX || t->sleep_to_time > INT_MAX)
+		ft_error_help("numero excedido del INT_MAX");
 }
 
 long	time_start_prog(void)
@@ -71,10 +78,9 @@ int	main(int ac, char **av)
 	preclean(&t);
 	init_data_table(&t);
 	init_data_philos(&p, &t);
-	checker_argv(&t, av);
+	checker_argv(&t, av, ac);
 	init_semaphores(&t);
 	set_philos(&t, &p);
 	clean(&t);
-	
 	return (0);
 }

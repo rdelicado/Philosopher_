@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:34:30 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/10/16 10:19:36 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:53:30 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	ft_error(char *str)
 	exit(1);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
-	int	num;
-	int	sign;
+	long	num;
+	int		sign;
 
 	sign = 1;
 	num = 0;
@@ -74,7 +74,7 @@ long	ft_usleep(int time, t_table *t)
 		if (t->is_dead)
 		{
 			sem_post(t->sem);
-			break;
+			break ;
 		}
 		else
 			sem_post(t->sem);

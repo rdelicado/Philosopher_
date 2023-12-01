@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 19:23:04 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/11/30 20:43:30 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:55:08 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <limits.h>
 
 // Definiciones de colores
 # define RESET "\x1B[0m"
@@ -45,19 +46,18 @@ typedef struct s_table
 	sem_t				*sem;
 	sem_t				*forks;
 	sem_t				*sem_meals_eaten;
+	sem_t				*sem_death;
 	pid_t				*child_pids;
 	pid_t				pid;
 	t_philo				*arr_p;
-	int					n_philo;
+	long				n_philo;
 	long				time_init;
-	int					die_to_time;
-	int					eat_to_time;
-	int					thing_to_time;
-	int					sleep_to_time;
-	int					num_meals;
-	int					cont_eat;
+	long				die_to_time;
+	long				eat_to_time;
+	long				thing_to_time;
+	long				sleep_to_time;
+	long				num_meals;
 	int					is_dead;
-	int					has_eaten;
 }						t_table;
 
 typedef struct s_philo
@@ -76,15 +76,15 @@ void					init_data_philos(t_philo *p, t_table *t);
 int						ft_strcmp(const char *s1, const char *s2);
 
 /* philo.c */
-void					checker_argv(t_table *t, char **av);
-void					init_args(t_table *t, char **av);
+void					checker_argv(t_table *t, char **av, int ac);
+void					init_args(t_table *t, char **av, int ac);
 long					time_start_prog(void);
 int						main(int ac, char **av);
 
 /* utils_philo.c */
 void					ft_error_help(char *str);
 void					ft_error(char *str);
-int						ft_atoi(const char *str);
+long					ft_atol(const char *str);
 int						ft_isdigit(int c);
 long					ft_usleep(int time, t_table *t);
 
@@ -112,7 +112,7 @@ void					ft_simulator(t_philo *p);
 /* utils_extras.c */
 void					ft_last_eat(t_philo *p);
 void					ft_meals(t_philo *p);
-void						ft_exit_for_eat(t_table *t);
+int						ft_exit_for_eat(t_table *t);
 void					create_fork(t_table *t, t_philo *p);
 
 #endif

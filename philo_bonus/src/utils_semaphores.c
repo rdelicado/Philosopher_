@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:56:53 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/11/30 20:33:05 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:22:42 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	preclean(t_table *t)
 	sem_unlink("/control");
 	sem_unlink("/forks");
 	sem_unlink("/sem_meals_eaten");
+	sem_unlink("/death");
 }
 
 void	clean(t_table *t)
@@ -51,6 +52,7 @@ void	clean(t_table *t)
 	sem_unlink("/control");
 	sem_unlink("/forks");
 	sem_unlink("/sem_meals_eaten");
+	sem_unlink("/death");
 	i = 0;
 	while (i < t->n_philo)
 	{
@@ -72,6 +74,9 @@ void	init_semaphores(t_table *t)
 	t->sem_meals_eaten = sem_open("/meals_eaten", O_CREAT, 0644, 0);
 	if (t->sem_meals_eaten == SEM_FAILED)
 		ft_error("No se pudo crear el semaforo de comidas");
+	t->sem_death = sem_open("/died", O_CREAT, 0644, 0);
+	if (t->sem_meals_eaten == SEM_FAILED)
+		ft_error("No se pudo crear el semaforo de muerte");
 }
 
 

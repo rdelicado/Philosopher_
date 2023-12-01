@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 08:52:33 by rdelicad          #+#    #+#             */
-/*   Updated: 2023/11/30 20:33:33 by rdelicad         ###   ########.fr       */
+/*   Updated: 2023/12/01 13:51:55 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ void	init_data_table(t_table *t)
 	t->n_philo = -1;
 	t->is_dead = 0;
 	t->time_init = -1;
-	t->cont_eat = 0;
 	t->pid = -1;
-	t->has_eaten = 0;
 }
 
 void	init_data_philos(t_philo *p, t_table *t)
