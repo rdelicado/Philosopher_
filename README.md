@@ -4,238 +4,238 @@
 [![Language](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Threading](https://img.shields.io/badge/Threading-pthreads-green.svg)](https://en.wikipedia.org/wiki/POSIX_Threads)
 
-## 📋 Descripción
+## 📋 Description
 
-**Philosophers** es una implementación del clásico problema de **los filósofos comensales** de Edsger Dijkstra. Este proyecto forma parte del curriculum de **42 Málaga** y tiene como objetivo enseñar conceptos fundamentales de programación concurrente, sincronización de hilos y prevención de deadlocks.
+**Philosophers** is an implementation of the classic **Dining Philosophers Problem** by Edsger Dijkstra. This project is part of the **42 Málaga** curriculum and aims to teach fundamental concepts of concurrent programming, thread synchronization, and deadlock prevention.
 
-### El Problema de los Filósofos Comensales
+### The Dining Philosophers Problem
 
-Varios filósofos están sentados alrededor de una mesa circular. Entre cada par de filósofos hay exactamente un tenedor. Para comer, un filósofo debe tomar ambos tenedores adyacentes (izquierdo y derecho). El desafío consiste en diseñar un algoritmo que evite:
-- **Deadlock**: Todos los filósofos toman su tenedor izquierdo simultáneamente
-- **Starvation**: Un filósofo nunca puede comer
-- **Race conditions**: Acceso no sincronizado a recursos compartidos
+Several philosophers are sitting around a circular table. Between each pair of philosophers, there is exactly one fork. To eat, a philosopher must take both adjacent forks (left and right). The challenge is to design an algorithm that avoids:
+- **Deadlock**: All philosophers take their left fork simultaneously
+- **Starvation**: A philosopher never gets to eat
+- **Race conditions**: Unsynchronized access to shared resources
 
-## 🛠️ Compilación
+## 🛠️ Compilation
 
 ```bash
-# Compilar la versión principal
+# Compile main version
 cd philo
 make
 
-# Compilar la versión bonus (con semáforos)
+# Compile bonus version (with semaphores)
 cd philo_bonus
 make
 
-# Limpiar archivos objeto
+# Clean object files
 make clean
 
-# Limpiar todo
+# Clean everything
 make fclean
 
-# Re-compilar completamente
+# Re-compile completely
 make re
 ```
 
-## 🚀 Uso
+## 🚀 Usage
 
-### Versión Principal (Threads + Mutex)
+### Main Version (Threads + Mutex)
 ```bash
 ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
 ```
 
-### Parámetros
-- **number_of_philosophers**: Número de filósofos y tenedores (≥ 1)
-- **time_to_die**: Tiempo máximo sin comer antes de morir (ms)
-- **time_to_eat**: Tiempo que tarda un filósofo en comer (ms)
-- **time_to_sleep**: Tiempo que tarda un filósofo en dormir (ms)
-- **[number_of_times_each_philosopher_must_eat]**: (Opcional) Número de comidas requeridas por filósofo
+### Parameters
+- **number_of_philosophers**: Number of philosophers and forks (≥ 1)
+- **time_to_die**: Maximum time without eating before dying (ms)
+- **time_to_eat**: Time it takes for a philosopher to eat (ms)
+- **time_to_sleep**: Time it takes for a philosopher to sleep (ms)
+- **[number_of_times_each_philosopher_must_eat]**: (Optional) Number of meals required per philosopher
 
-### Ejemplos de Uso
+### Usage Examples
 
 ```bash
-# 4 filósofos, mueren en 410ms, comen en 200ms, duermen en 200ms
+# 4 philosophers, die in 410ms, eat in 200ms, sleep in 200ms
 ./philo 4 410 200 200
 
-# 5 filósofos con 3 comidas obligatorias cada uno
+# 5 philosophers with 3 mandatory meals each
 ./philo 5 800 200 200 3
 
-# Caso extremo: 1 filósofo (debería morir)
+# Edge case: 1 philosopher (should die)
 ./philo 1 800 200 200
 
-# Test de rendimiento: muchos filósofos
+# Performance test: many philosophers
 ./philo 200 410 200 200
 ```
 
-## 🎨 Salida del Programa
+## 🎨 Program Output
 
-El programa muestra las acciones de cada filósofo en tiempo real con colores:
+The program shows each philosopher's actions in real-time with colors:
 ```
 [timestamp] [philosopher_id] [action]
 ```
 
-### Acciones
-- 🟢 **Verde**: `has taken a fork`
-- 🟡 **Amarillo**: `is eating`
+### Actions
+- 🟢 **Green**: `has taken a fork`
+- 🟡 **Yellow**: `is eating`
 - 🟣 **Magenta**: `is sleeping`
-- 🔵 **Azul**: `is thinking`
-- 🔴 **Rojo**: `died`
+- 🔵 **Blue**: `is thinking`
+- 🔴 **Red**: `died`
 
-## 🏗️ Arquitectura
+## 🏗️ Architecture
 
-### Estructuras Principales
+### Main Structures
 
 ```c
 typedef struct s_table {
-    pthread_mutex_t table;          // Mutex principal
-    pthread_t control;              // Hilo controlador
-    t_philo *arr_p;                 // Array de filósofos
-    long n_philo;                   // Número de filósofos
-    long die_to_time;               // Tiempo para morir
-    long eat_to_time;               // Tiempo para comer
-    long sleep_to_time;             // Tiempo para dormir
-    int is_dead;                    // Flag de muerte
-    // ... más campos
+    pthread_mutex_t table;          // Main mutex
+    pthread_t control;              // Controller thread
+    t_philo *arr_p;                 // Array of philosophers
+    long n_philo;                   // Number of philosophers
+    long die_to_time;               // Time to die
+    long eat_to_time;               // Time to eat
+    long sleep_to_time;             // Time to sleep
+    int is_dead;                    // Death flag
+    // ... more fields
 } t_table;
 
 typedef struct s_philo {
-    pthread_mutex_t l_fork;         // Tenedor izquierdo
-    pthread_mutex_t *r_fork;        // Tenedor derecho
-    pthread_t thread;               // Hilo del filósofo
-    t_table *t;                     // Referencia a la mesa
-    long last_eat;                  // Último tiempo de comida
-    int index;                      // ID del filósofo
-    int meals;                      // Comidas realizadas
+    pthread_mutex_t l_fork;         // Left fork
+    pthread_mutex_t *r_fork;        // Right fork
+    pthread_t thread;               // Philosopher thread
+    t_table *t;                     // Reference to table
+    long last_eat;                  // Last eating time
+    int index;                      // Philosopher ID
+    int meals;                      // Meals completed
 } t_philo;
 ```
 
-## 🔄 Algoritmo de Sincronización
+## 🔄 Synchronization Algorithm
 
-### Prevención de Deadlock
-1. **Offset temporal**: Los filósofos pares esperan 1ms antes de empezar
-2. **Orden de toma**: Siempre tenedor izquierdo primero, luego derecho
-3. **Liberación atómica**: Ambos tenedores se liberan simultáneamente
+### Deadlock Prevention
+1. **Time offset**: Even philosophers wait 1ms before starting
+2. **Taking order**: Always left fork first, then right
+3. **Atomic release**: Both forks are released simultaneously
 
-### Rutina del Filósofo
+### Philosopher Routine
 ```
-BUCLE INFINITO:
-├── Tomar tenedor izquierdo 🍴
-├── Tomar tenedor derecho 🍴
-├── Comer 🍝 (actualizar último tiempo de comida)
-├── Liberar ambos tenedores
-├── Dormir 😴
-├── Pensar 🤔
-└── Verificar condiciones de finalización
+INFINITE LOOP:
+├── Take left fork 🍴
+├── Take right fork 🍴
+├── Eat 🍝 (update last eating time)
+├── Release both forks
+├── Sleep 😴
+├── Think 🤔
+└── Check termination conditions
 ```
 
-### Hilo Controlador
-- Monitorea continuamente el estado de todos los filósofos
-- Detecta si algún filósofo ha muerto de hambre
-- Verifica si todos han completado las comidas requeridas
+### Controller Thread
+- Continuously monitors the state of all philosophers
+- Detects if any philosopher has died of starvation
+- Verifies if all have completed the required meals
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 Philosopher_/
-├── philo/                          # Versión principal (threads + mutex)
+├── philo/                          # Main version (threads + mutex)
 │   ├── include/
-│   │   └── philo.h                 # Headers y definiciones
+│   │   └── philo.h                 # Headers and definitions
 │   ├── src/
-│   │   ├── philo.c                 # Función main e inicialización
-│   │   ├── utils_simulator.c       # Lógica del simulador
-│   │   ├── utils_rutine.c          # Rutinas de los filósofos
-│   │   ├── utils_phtreads.c        # Manejo de hilos
-│   │   ├── utils_philo.c           # Utilidades generales
-│   │   ├── utils_extras.c          # Funciones auxiliares
-│   │   └── leaks.c                 # Gestión de memoria
-│   ├── obj/                        # Archivos objeto
-│   ├── Makefile                    # Compilación
-│   └── esquema.excalidraw          # Diagrama del algoritmo
-└── philo_bonus/                    # Versión bonus (procesos + semáforos)
+│   │   ├── philo.c                 # Main function and initialization
+│   │   ├── utils_simulator.c       # Simulator logic
+│   │   ├── utils_rutine.c          # Philosopher routines
+│   │   ├── utils_phtreads.c        # Thread management
+│   │   ├── utils_philo.c           # General utilities
+│   │   ├── utils_extras.c          # Auxiliary functions
+│   │   └── leaks.c                 # Memory management
+│   ├── obj/                        # Object files
+│   ├── Makefile                    # Compilation
+│   └── esquema.excalidraw          # Algorithm diagram
+└── philo_bonus/                    # Bonus version (processes + semaphores)
     └── ...
 ```
 
 ## 🧪 Testing
 
-### Tests Básicos
+### Basic Tests
 ```bash
-# Test básico de funcionamiento
+# Basic functionality test
 ./philo 4 410 200 200
 
-# Test sin muertes
+# Test without deaths
 ./philo 4 800 200 200
 
-# Test con comidas limitadas
+# Test with limited meals
 ./philo 5 800 200 200 7
 ```
 
-### Tests de Edge Cases
+### Edge Case Tests
 ```bash
-# Un solo filósofo (debe morir)
+# Single philosopher (should die)
 ./philo 1 800 200 200
 
-# Tiempos muy ajustados
+# Very tight timing
 ./philo 4 310 200 100
 
-# Muchos filósofos
+# Many philosophers
 ./philo 200 410 200 200
 ```
 
-### Herramientas de Debug
+### Debug Tools
 ```bash
-# Verificar memory leaks
+# Check memory leaks
 valgrind --tool=memcheck --leak-check=full ./philo 4 410 200 200
 
-# Detectar race conditions
+# Detect race conditions
 valgrind --tool=helgrind ./philo 4 410 200 200
 
-# Profiling de rendimiento
+# Performance profiling
 valgrind --tool=callgrind ./philo 4 410 200 200
 ```
 
-## 🎯 Objetivos de Aprendizaje
+## 🎯 Learning Objectives
 
-- **Programación concurrente** con pthreads
-- **Sincronización** usando mutex
-- **Prevención de deadlocks** y race conditions
-- **Gestión de memoria** en entornos multi-hilo
-- **Timing preciso** con `gettimeofday()`
-- **Algoritmos de scheduling** y fairness
+- **Concurrent programming** with pthreads
+- **Synchronization** using mutex
+- **Prevention of deadlocks** and race conditions
+- **Memory management** in multi-threaded environments
+- **Precise timing** with `gettimeofday()`
+- **Scheduling algorithms** and fairness
 
-## 📊 Casos de Uso Típicos
+## 📊 Typical Use Cases
 
-| Filósofos | Tiempo Muerte | Come | Duerme | Resultado Esperado |
-|-----------|---------------|------|--------|--------------------|
-| 1         | 800           | 200  | 200    | Muerte inmediata   |
-| 2         | 800           | 200  | 200    | Simulación infinita |
-| 4         | 410           | 200  | 200    | Simulación estable |
-| 5         | 800           | 200  | 200    | Simulación estable |
-| 4         | 310           | 200  | 100    | Muerte por timing  |
+| Philosophers | Death Time | Eat | Sleep | Expected Result |
+|--------------|------------|-----|-------|-----------------|
+| 1            | 800        | 200 | 200   | Immediate death |
+| 2            | 800        | 200 | 200   | Infinite simulation |
+| 4            | 410        | 200 | 200   | Stable simulation |
+| 5            | 800        | 200 | 200   | Stable simulation |
+| 4            | 310        | 200 | 100   | Death by timing |
 
-## 🚨 Condiciones de Finalización
+## 🚨 Termination Conditions
 
-1. **Muerte por hambre**: Un filósofo no come a tiempo
-2. **Comidas completadas**: Todos han comido el número requerido
-3. **Error crítico**: Fallo en el sistema de hilos
+1. **Death by starvation**: A philosopher doesn't eat in time
+2. **Meals completed**: All have eaten the required number
+3. **Critical error**: Failure in thread system
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
 **Rubén Delicado** - [@rdelicado](https://github.com/rdelicado)
 - 📧 rdelicad@student.42.com
 - 🏫 42 Málaga
-- 📅 Septiembre 2023
+- 📅 September 2023
 
-## 📜 Licencia
+## 📜 License
 
-Este proyecto es parte del curriculum de 42 School y está destinado únicamente para fines educativos.
+This project is part of the 42 School curriculum and is intended for educational purposes only.
 
 ## 🎓 42 School
 
-Este proyecto forma parte del **Common Core** de 42 School, específicamente del módulo de **programación concurrente**. El objetivo es dominar conceptos fundamentales de sistemas operativos y programación paralela.
+This project is part of the **Common Core** of 42 School, specifically the **concurrent programming** module. The goal is to master fundamental concepts of operating systems and parallel programming.
 
-### Recursos Adicionales
-- [Documentación oficial de pthreads](https://man7.org/linux/man-pages/man7/pthreads.7.html)
-- [El problema original de Dijkstra](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
-- [Norma de 42](https://github.com/42School/norminette)
+### Additional Resources
+- [Official pthreads documentation](https://man7.org/linux/man-pages/man7/pthreads.7.html)
+- [Dijkstra's original problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
+- [42 Norm](https://github.com/42School/norminette)
 
 ---
 
